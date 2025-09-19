@@ -6,6 +6,6 @@ services:
     env_file:
       - ../.env
     environment:
-      - APP_RUN_AS_SERVICE: true
+      APP_RUN_AS_SERVICE: true
     ports:
       - ${API_MAP_PORT}:8000
