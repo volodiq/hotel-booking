@@ -9,6 +9,7 @@ dependencies = [
     "asyncpg>=0.30.0",
     "dishka>=1.7.1",
     "fastapi[standard]>=0.116.2",
+    "phonenumberslite>=9.0.14",
     "pydantic-settings>=2.10.1",
     "sqlalchemy>=2.0.43",
     "uvicorn[standard]>=0.35.0",
