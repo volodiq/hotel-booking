@@ -1,6 +1,12 @@
 from core.domain.exceptions import DomainError
 
 
+class UserAlreadyExists(DomainError):
+    @property
+    def details(self) -> str:
+        return "Пользователь с таким номером телефона уже существует"
+
+
 class PhoneNumberEmpty(DomainError):
     @property
     def details(self) -> str:
