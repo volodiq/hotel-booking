@@ -14,12 +14,12 @@ class PhoneNumber(ValueObject[str]):
             parsed_number = phonenumbers.parse(self.value, "RU")
         except phonenumbers.NumberParseException:
             raise exc.PhoneNumberInvalid()
-        if not phonenumbers.is_valid_number_for_region(parsed_number, "RU"):
-            raise exc.PhoneNumberUnsupportedRegion()
         if not phonenumbers.is_possible_number(parsed_number):
             raise exc.PhoneNumberInvalid()
         if not phonenumbers.is_valid_number(parsed_number):
             raise exc.PhoneNumberInvalid()
+        if not phonenumbers.is_valid_number_for_region(parsed_number, "RU"):
+            raise exc.PhoneNumberUnsupportedRegion()
 
 
 class FirstName(ValueObject[str]):

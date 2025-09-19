@@ -58,3 +58,5 @@ def test_phone_number_invalid(faker: Faker):
         PhoneNumber(phone_number)
     with pytest.raises(exc.PhoneNumberInvalid):
         PhoneNumber(faker.text())
+    with pytest.raises(exc.PhoneNumberInvalid):
+        PhoneNumber("+719999999999")
