@@ -1,17 +1,13 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
 
 from sqlalchemy import sql
-from sqlalchemy.ext.asyncio import AsyncSession
+
+from core.repositories import SARepository
 
 from .db_models import UserModel
 from .domain.entities import NewUser
 
 
-# TODO: Вынести базовый репозиторий SQLAlchemy в core
-
-
-@dataclass
 class UserRepository(ABC):
     @abstractmethod
     async def create_user(self, user: NewUser): ...
@@ -20,9 +16,8 @@ class UserRepository(ABC):
     async def get_user_by_phone(self, phone: str) -> UserModel | None: ...
 
 
-@dataclass
-class SAUserRepository(UserRepository):
-    session: AsyncSession
+class SAUserRepository(UserRepository, SARepository[UserModel]):
+    model = UserModel
 
     async def create_user(self, user: NewUser):
         model = UserModel(
@@ -32,7 +27,7 @@ class SAUserRepository(UserRepository):
             phone_number=user.phone.value,
             created_at=user.created_at.replace(tzinfo=None),
         )
-        self.session.add(model)
+        self.create(model)
 
     async def get_user_by_phone(self, phone: str) -> UserModel | None:
         stmt = sql.select(UserModel).where(UserModel.phone_number == phone)
