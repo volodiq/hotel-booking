@@ -7,15 +7,15 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from src.app import all_models
-from src.providers.env import Env
+from app import all_models
+from providers.env import Env
 
 
 app_run_as_service = getenv("APP_RUN_AS_SERVICE")
 if app_run_as_service:
     env = Env()  # type: ignore
 else:
-    env = Env(DB_NAME="localhost")  # type: ignore
+    env = Env(DBMS_HOST="localhost")  # type: ignore
 
 
 # this is the Alembic Config object, which provides
