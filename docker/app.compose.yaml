@@ -1,0 +1,11 @@
+services:
+  backend:
+    build: ..
+    restart: unless-stopped
+    command: sh /app/start_api.sh
+    env_file:
+      - ../.env
+    environment:
+      - APP_RUN_AS_SERVICE: true
+    ports:
+      - ${API_MAP_PORT}:8000
