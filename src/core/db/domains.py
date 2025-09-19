@@ -14,3 +14,11 @@ DateTime = Annotated[
         default=utcnow,
     ),
 ]
+
+String = Annotated[
+    str,
+    mapped_column(
+        types.String,
+        nullable=False,
+    ),
+]
