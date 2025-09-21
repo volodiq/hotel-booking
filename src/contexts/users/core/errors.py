@@ -47,3 +47,39 @@ class LastNameTooLong(DomainError):
     @property
     def details(self) -> str:
         return "Фамилия пользователя слишком длинная"
+
+
+class PasswordIsEmpty(DomainError):
+    @property
+    def details(self) -> str:
+        return "Пароль пользователя не может быть пустым"
+
+
+class PasswordTooShort(DomainError):
+    @property
+    def details(self) -> str:
+        return "Пароль пользователя слишком короткий"
+
+
+class PasswordTooLong(DomainError):
+    @property
+    def details(self) -> str:
+        return "Пароль пользователя слишком длинный"
+
+
+class PasswordDontContainsUppercase(DomainError):
+    @property
+    def details(self) -> str:
+        return "Пароль пользователя должен содержать хотя бы одну заглавную букву"
+
+
+class PasswordDontContainsDigit(DomainError):
+    @property
+    def details(self) -> str:
+        return "Пароль пользователя должен содержать хотя бы одну цифру"
+
+
+class PasswordDontContainsSpecialSymbol(DomainError):
+    @property
+    def details(self) -> str:
+        return "Пароль пользователя должен содержать хотя бы один специальный символ"

@@ -10,3 +10,4 @@ class User(Entity):
     phone: values.PhoneNumber
     first_name: values.FirstName
     last_name: values.LastName
+    password_hash: values.PasswordHash
