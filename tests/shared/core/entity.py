@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from faker import Faker
 
-from core.domain.entity import Entity
+from shared.core.entity import Entity
 
 
 @dataclass(eq=False, frozen=True)

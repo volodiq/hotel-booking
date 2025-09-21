@@ -7,8 +7,8 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from app import all_models
-from providers.env import Env
+from app import models_registry
+from shared.providers.env import Env
 
 
 app_run_as_service = getenv("APP_RUN_AS_SERVICE")
@@ -32,7 +32,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = all_models.DBModel.metadata
+target_metadata = models_registry.DBModel.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

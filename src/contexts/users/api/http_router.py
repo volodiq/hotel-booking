@@ -1,8 +1,8 @@
 from dishka.integrations.fastapi import DishkaRoute, FromDishka
 from fastapi import APIRouter
 
-from ..domain.services import CreateUserService
-from . import schemas
+from ..core.services import CreateUserService
+from . import http_schemas
 
 
 router = APIRouter(
@@ -14,7 +14,7 @@ router = APIRouter(
 
 @router.post("/")
 async def create_user(
-    data: schemas.SCreateUser,
+    data: http_schemas.SCreateUser,
     create_user_service: FromDishka[CreateUserService],
 ):
     await create_user_service(

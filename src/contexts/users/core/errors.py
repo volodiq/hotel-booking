@@ -1,4 +1,4 @@
-from core.domain.exceptions import DomainError
+from shared.core.errors import DomainError
 
 
 class UserAlreadyExists(DomainError):

@@ -17,7 +17,7 @@ class ValueObject(ABC, Generic[VT]):
     def validate(self):
         """
         Проверяет значение, если оно не валидно, то генерирует
-        core.domain.exceptions.DomainError
+        core.domain.errors.DomainError
         """
 
         ...

@@ -1,10 +1,10 @@
 from dishka.integrations.fastapi import setup_dishka
 from fastapi import FastAPI, HTTPException, Request, status
 
-from app import all_models  # noqa: F401
+from app import models_registry  # noqa: F401
 from app.container import container
-from contexts.users.rest_api.router import router as users_router
-from core.domain.exceptions import DomainError
+from contexts.users.api.http_router import router as users_router
+from shared.core.errors import DomainError
 
 
 async def domain_error_handler(request: Request, exc: DomainError):
