@@ -8,7 +8,7 @@ VT = TypeVar("VT")
 
 @dataclass(frozen=True)
 class ValueObject(ABC, Generic[VT]):
-    value: VT
+    _value: VT
 
     def __post_init__(self):
         self.validate()
@@ -21,3 +21,7 @@ class ValueObject(ABC, Generic[VT]):
         """
 
         ...
+
+    @property
+    def value(self) -> VT:
+        return self._value
