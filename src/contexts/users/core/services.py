@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
-from ..infra.repositories import UserRepository
-from . import exceptions as exc, values
-from .entities import NewUser
+from . import errors, values
+from .entities import User
+from .repositories import UserRepository
 
 
 @dataclass
@@ -17,9 +17,9 @@ class CreateUserService:
     ):
         exists_user = await self.repository.get_user_by_phone(phone)
         if exists_user:
-            raise exc.UserAlreadyExists()
+            raise errors.UserAlreadyExists()
 
-        user = NewUser(
+        user = User(
             first_name=values.FirstName(first_name),
             last_name=values.LastName(last_name),
             phone=values.PhoneNumber(phone),

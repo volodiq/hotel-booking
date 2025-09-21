@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Mapped, mapped_column
 
-from shared.infra.db_models import DBModel
-from shared.infra.domains import String
+from shared.infra.db_domains import String
+from shared.infra.models import DBModel
 
 
 class UserModel(DBModel):

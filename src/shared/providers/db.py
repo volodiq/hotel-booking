@@ -8,12 +8,12 @@ from shared.providers.env import Env
 
 class DBProvider(Provider):
     @provide(scope=Scope.APP)
-    def provide_db_session_pool(self, env: Env) -> async_sessionmaker:
+    def db_session_pool(self, env: Env) -> async_sessionmaker:
         engine = create_async_engine(env.db_dsn)
         return async_sessionmaker(engine, expire_on_commit=False)
 
     @provide(scope=Scope.REQUEST)
-    async def provide_db_session(
+    async def db_session(
         self,
         session_pool: async_sessionmaker,
     ) -> AsyncIterable[AsyncSession]:

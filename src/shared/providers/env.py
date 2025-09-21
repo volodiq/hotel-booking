@@ -30,7 +30,7 @@ class Env(BaseSettings):
 
 class EnvProvider(Provider):
     @provide(scope=Scope.APP)
-    def provide_env(self) -> Env:
+    def env(self) -> Env:
         app_run_as_service = getenv("APP_RUN_AS_SERVICE")
         if app_run_as_service:
             return Env()  # type: ignore

@@ -2,7 +2,7 @@ from faker import Faker
 import phonenumbers
 import pytest
 
-from contexts.users.core import exceptions as exc
+from contexts.users.core import errors as exc
 from contexts.users.core.values import FirstName, LastName, PhoneNumber
 
 
