@@ -35,5 +35,5 @@ class SAUserRepository(UserRepository, SARepository[UserModel]):
             last_name=values.LastName(user_db.last_name),
             phone=values.PhoneNumber(user_db.phone_number),
             created_at=user_db.created_at,
-            password_hash=user_db.password_hash,
+            password_hash=values.PasswordHash(user_db.password_hash),
         )
