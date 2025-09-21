@@ -19,7 +19,7 @@ class SomeValue(ValueObject[str]):
 def test_value_object_success(faker: Faker):
     text = faker.text(max_nb_chars=10)
     some_value = SomeValue(text)
-    assert some_value.value == text
+    assert some_value._value == text
 
 
 def test_value_object_validation(faker: Faker):
