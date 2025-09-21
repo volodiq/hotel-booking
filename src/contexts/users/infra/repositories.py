@@ -21,8 +21,8 @@ class SAUserRepository(UserRepository, SARepository[UserModel]):
         )
         self.create(model)
 
-    async def get_user_by_phone(self, phone: str) -> User | None:
-        stmt = sql.select(UserModel).where(UserModel.phone_number == phone)
+    async def get_user_by_phone(self, phone: values.PhoneNumber) -> User | None:
+        stmt = sql.select(UserModel).where(UserModel.phone_number == phone.value)
         res = await self.session.scalars(stmt)
         user_db = res.one_or_none()
         if not user_db:
