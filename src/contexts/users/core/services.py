@@ -15,7 +15,7 @@ class CreateUserService:
         last_name: str,
         phone: str,
     ):
-        exists_user = await self.repository.get_user_by_phone(phone)
+        exists_user = await self.repository.get_user_by_phone(values.PhoneNumber(phone))
         if exists_user:
             raise errors.UserAlreadyExists()
 
