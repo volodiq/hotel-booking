@@ -1,7 +1,7 @@
 import phonenumbers
 
 from contexts.users.domain import exceptions as exc
-from core.domain.value import ValueObject
+from shared.core.value import ValueObject
 
 
 class PhoneNumber(ValueObject[str]):

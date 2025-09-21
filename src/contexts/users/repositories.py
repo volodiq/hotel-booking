@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from sqlalchemy import sql
 
-from core.repositories import SARepository
+from shared.infra.repositories import SARepository
 
 from .db_models import UserModel
 from .domain.entities import NewUser

@@ -3,7 +3,7 @@
 """
 
 from contexts.users.db_models import UserModel
-from core.db.models import DBModel
+from shared.infra.db_models import DBModel
 
 
 __all__ = [

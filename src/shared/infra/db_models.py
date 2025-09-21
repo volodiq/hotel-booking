@@ -1,7 +1,7 @@
 from sqlalchemy import types
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
-from core.db.domains import DateTime
+from shared.infra.domains import DateTime
 
 
 class DBModel(DeclarativeBase):

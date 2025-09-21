@@ -3,7 +3,7 @@ from typing import Generic, TypeVar
 from sqlalchemy import sql
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .db.models import DBModel
+from .db_models import DBModel
 
 
 MT = TypeVar("MT", bound=DBModel)
