@@ -18,7 +18,7 @@ class SAUserRepository(UserRepository, SARepository[UserModel]):
             last_name=user.last_name.value,
             phone_number=user.phone.value,
             created_at=user.created_at.replace(tzinfo=None),
-            password_hash=user.password_hash.value,
+            password_hash=user.password_hash,
         )
         self.create(model)
 
@@ -35,5 +35,5 @@ class SAUserRepository(UserRepository, SARepository[UserModel]):
             last_name=values.LastName(user_db.last_name),
             phone=values.PhoneNumber(user_db.phone_number),
             created_at=user_db.created_at,
-            password_hash=values.PasswordHash(user_db.password_hash),
+            password_hash=user_db.password_hash,
         )

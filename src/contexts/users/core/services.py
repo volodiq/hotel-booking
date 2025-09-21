@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from shared.utils import calculate_password_hash
+
 from . import errors, values
 from .entities import User
 from .repositories import UserRepository
@@ -21,7 +23,7 @@ class CreateUserService:
             raise errors.UserAlreadyExists()
 
         raw_password = values.RawPassword(password)
-        password_hash = values.PasswordHash.from_raw(raw_password)
+        password_hash = calculate_password_hash(raw_password.value)
 
         user = User(
             first_name=values.FirstName(first_name),
