@@ -4,8 +4,8 @@ from sqlalchemy import sql
 
 from shared.infra.repositories import SARepository
 
+from ..core.entities import NewUser
 from .db_models import UserModel
-from .domain.entities import NewUser
 
 
 class UserRepository(ABC):

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from ..repositories import UserRepository
+from ..infra.repositories import UserRepository
 from . import exceptions as exc, values
 from .entities import NewUser
 

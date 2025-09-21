@@ -2,8 +2,8 @@ from faker import Faker
 import phonenumbers
 import pytest
 
-from contexts.users.domain import exceptions as exc
-from contexts.users.domain.values import FirstName, LastName, PhoneNumber
+from contexts.users.core import exceptions as exc
+from contexts.users.core.values import FirstName, LastName, PhoneNumber
 
 
 def test_first_name(faker: Faker):

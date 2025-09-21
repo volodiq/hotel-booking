@@ -1,8 +1,8 @@
 from dishka import Provider, Scope, provide
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .domain.services import CreateUserService
-from .repositories import SAUserRepository, UserRepository
+from .core.services import CreateUserService
+from .infra.repositories import SAUserRepository, UserRepository
 
 
 class UsersProvider(Provider):

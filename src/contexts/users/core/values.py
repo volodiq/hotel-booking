@@ -1,6 +1,6 @@
 import phonenumbers
 
-from contexts.users.domain import exceptions as exc
+from contexts.users.core import exceptions as exc
 from shared.core.value import ValueObject
 
 

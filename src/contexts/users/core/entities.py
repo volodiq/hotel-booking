@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from contexts.users.domain import values
+from contexts.users.core import values
 from shared.core.entity import Entity
 
 

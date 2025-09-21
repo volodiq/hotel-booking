@@ -1,7 +1,7 @@
 from dishka.integrations.fastapi import DishkaRoute, FromDishka
 from fastapi import APIRouter
 
-from ..domain.services import CreateUserService
+from ..core.services import CreateUserService
 from . import schemas
 
 
