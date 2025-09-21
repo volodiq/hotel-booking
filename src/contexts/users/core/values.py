@@ -7,12 +7,11 @@ from . import errors
 
 class PhoneNumber(ValueObject[str]):
     def validate(self):
-        # TODO Добавить обновление self.value в формате E164
-        if not self.value:
+        if not self._value:
             raise errors.PhoneNumberEmpty()
 
         try:
-            parsed_number = phonenumbers.parse(self.value, "RU")
+            parsed_number = phonenumbers.parse(self._value, "RU")
         except phonenumbers.NumberParseException:
             raise errors.PhoneNumberInvalid()
         if not phonenumbers.is_possible_number(parsed_number):
@@ -21,6 +20,18 @@ class PhoneNumber(ValueObject[str]):
             raise errors.PhoneNumberInvalid()
         if not phonenumbers.is_valid_number_for_region(parsed_number, "RU"):
             raise errors.PhoneNumberUnsupportedRegion()
+
+    @property
+    def value(self):
+        """
+        Возвращает номер телефона в формате E164
+        """
+
+        parsed_number = phonenumbers.parse(self._value, "RU")
+        return phonenumbers.format_number(
+            parsed_number,
+            phonenumbers.PhoneNumberFormat.E164,
+        )
 
 
 class FirstName(ValueObject[str]):
