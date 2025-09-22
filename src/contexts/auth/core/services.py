@@ -11,6 +11,9 @@ class TokenService(ABC):
     @abstractmethod
     def create_token_pair(self, user_oid: str) -> TokenPair: ...
 
+    @abstractmethod
+    def refresh_access_token(self, refresh_token: str) -> str: ...
+
 
 @dataclass
 class AuthenticateUserService:
@@ -23,3 +26,11 @@ class AuthenticateUserService:
             raise errors.InvalidCredentials()
 
         return self.token_service.create_token_pair(verification_result.user_oid)
+
+
+@dataclass
+class RefreshTokenService:
+    token_service: TokenService
+
+    async def __call__(self, refresh_token: str) -> str:
+        return self.token_service.refresh_access_token(refresh_token)

@@ -6,7 +6,7 @@ from contexts.users.api.internal import VerifyUserPassword
 from shared.providers.env import Env
 
 from .core.gateways import UsersGateway
-from .core.services import AuthenticateUserService, TokenService
+from .core.services import AuthenticateUserService, RefreshTokenService, TokenService
 from .infra import gateways, services
 
 
@@ -36,3 +36,10 @@ class AuthProvider(Provider):
             users_gateway=users_gateway,
             token_service=token_service,
         )
+
+    @provide(scope=Scope.REQUEST)
+    async def refresh_token_service(
+        self,
+        token_service: TokenService,
+    ) -> RefreshTokenService:
+        return RefreshTokenService(token_service=token_service)
