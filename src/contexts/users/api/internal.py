@@ -1,10 +1,9 @@
 from dataclasses import dataclass
 import secrets
 
-from shared.utils import calculate_password_hash
-
 from ..core import values
 from ..core.repositories import UserRepository
+from ..core.services import PasswordHashService
 
 
 @dataclass
@@ -16,6 +15,7 @@ class VerifyUserPasswordOut:
 @dataclass
 class VerifyUserPassword:
     user_repository: UserRepository
+    password_hash_service: PasswordHashService
 
     async def __call__(
         self,
@@ -28,7 +28,7 @@ class VerifyUserPassword:
         if user is None:
             return VerifyUserPasswordOut(is_valid=False)
 
-        password_hash = calculate_password_hash(raw_password)
+        password_hash = self.password_hash_service.calculate_password_hash(raw_password)
         is_valid = secrets.compare_digest(user.password_hash, password_hash)
         if not is_valid:
             return VerifyUserPasswordOut(is_valid=False)

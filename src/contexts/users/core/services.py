@@ -1,15 +1,20 @@
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
-
-from shared.utils import calculate_password_hash
 
 from . import errors, values
 from .entities import User
 from .repositories import UserRepository
 
 
+class PasswordHashService(ABC):
+    @abstractmethod
+    def calculate_password_hash(self, raw_password: str) -> str: ...
+
+
 @dataclass
 class CreateUserService:
     repository: UserRepository
+    password_hash_service: PasswordHashService
 
     async def __call__(
         self,
@@ -23,7 +28,7 @@ class CreateUserService:
             raise errors.UserAlreadyExists()
 
         raw_password = values.RawPassword(password)
-        password_hash = calculate_password_hash(raw_password.value)
+        password_hash = self.password_hash_service.calculate_password_hash(raw_password.value)
 
         user = User(
             first_name=values.FirstName(first_name),
