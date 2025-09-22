@@ -5,6 +5,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Env(BaseSettings):
+    SECRET_KEY: str
+
     DB_NAME: str
     DB_USER: str
     DB_PASSWORD: str
