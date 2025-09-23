@@ -1,5 +1,6 @@
 from dishka.integrations.fastapi import setup_dishka
 from fastapi import FastAPI, HTTPException, Request, status
+from fastapi.openapi.utils import get_openapi
 
 from app import models_registry  # noqa: F401
 from app.container import container
@@ -30,9 +31,23 @@ async def invalid_token_error_handler(request: Request, exc: InvalidTokenData):
     )
 
 
+def get_custom_openapi(app: FastAPI):
+    schema = get_openapi(
+        title="Hotel booking API example",
+        version="1.0.0",
+        routes=app.routes,
+    )
+    schema.setdefault("components", {}).setdefault("securitySchemes", {})["HTTPBearer"] = {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+    }
+
+    return schema
+
+
 def create_app() -> FastAPI:
     app = FastAPI(
-        title="Hotel booking API example",
         root_path="/api",
         exception_handlers={
             DomainError: domain_error_handler,
@@ -44,4 +59,6 @@ def create_app() -> FastAPI:
     app.include_router(users_router)
     app.include_router(auth_router)
     setup_dishka(container=container, app=app)
+
+    app.openapi_schema = get_custom_openapi(app)
     return app
