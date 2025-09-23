@@ -22,6 +22,12 @@ class SecurityException(Exception):
         return "Токен не валиден"
 
 
+class NotAuthenticated(SecurityException):
+    @property
+    def details(self) -> str:
+        return "Пользователь не авторизован"
+
+
 class InvalidTokenFormat(SecurityException):
     @property
     def details(self) -> str:
