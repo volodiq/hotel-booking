@@ -5,6 +5,7 @@ from contexts.auth.di import AuthProvider
 from contexts.users.di import UsersProvider
 from shared.providers.db import DBProvider
 from shared.providers.env import EnvProvider
+from shared.providers.security import SecurityProvider
 
 
 container = make_async_container(
@@ -13,4 +14,5 @@ container = make_async_container(
     DBProvider(),
     UsersProvider(),
     AuthProvider(),
+    SecurityProvider(),
 )
