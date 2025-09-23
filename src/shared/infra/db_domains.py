@@ -22,3 +22,11 @@ String = Annotated[
         nullable=False,
     ),
 ]
+
+Bool = Annotated[
+    bool,
+    mapped_column(
+        types.Boolean,
+        nullable=False,
+    ),
+]
