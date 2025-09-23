@@ -1,3 +1,5 @@
+from string import punctuation
+
 import phonenumbers
 
 from shared.core.value_object import ValueObject
@@ -50,3 +52,19 @@ class LastName(ValueObject[str]):
 
         if len(self.value) > 50:
             raise errors.LastNameTooLong()
+
+
+class RawPassword(ValueObject[str]):
+    def validate(self):
+        if not self.value:
+            raise errors.PasswordIsEmpty()
+        if len(self.value) > 30:
+            raise errors.PasswordTooLong()
+        if len(self.value) < 8:
+            raise errors.PasswordTooShort()
+        if not any(char.isdigit() for char in self.value):
+            raise errors.PasswordDontContainsDigit()
+        if not any(char.isupper() for char in self.value):
+            raise errors.PasswordDontContainsUppercase()
+        if not any(char in punctuation for char in self.value):
+            raise errors.PasswordDontContainsSpecialSymbol()

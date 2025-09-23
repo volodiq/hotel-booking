@@ -10,3 +10,4 @@ class UserModel(DBModel):
     first_name: Mapped[String]
     last_name: Mapped[String]
     phone_number: Mapped[String] = mapped_column(index=True)
+    password_hash: Mapped[String]
