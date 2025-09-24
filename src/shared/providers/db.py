@@ -3,7 +3,7 @@ from typing import AsyncIterable
 from dishka import Provider, Scope, provide
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
-from shared.providers.env import Env
+from tech.env import Env
 
 
 class DBProvider(Provider):

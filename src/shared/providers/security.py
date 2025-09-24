@@ -7,7 +7,7 @@ from time import time
 from dishka import Provider, Scope, provide
 import jwt
 
-from .env import Env
+from tech.env import Env
 
 
 @dataclass

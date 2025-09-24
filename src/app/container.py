@@ -6,7 +6,6 @@ from contexts.auth.di import AuthProvider
 from contexts.hotel_admins.di import HotelAdminProvider
 from contexts.users.di import UsersProvider
 from shared.providers.db import DBProvider
-from shared.providers.env import EnvProvider
 from shared.providers.security import (
     NotAuthenticated,
     Principal,
@@ -14,6 +13,7 @@ from shared.providers.security import (
     TokenService,
     TokenType,
 )
+from tech.di import TechProvider
 
 
 class PrincipalProvider(Provider):
@@ -30,7 +30,7 @@ class PrincipalProvider(Provider):
 
 container = make_async_container(
     FastapiProvider(),
-    EnvProvider(),
+    TechProvider(),
     DBProvider(),
     UsersProvider(),
     AuthProvider(),

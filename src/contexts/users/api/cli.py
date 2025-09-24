@@ -1,7 +1,6 @@
 import asyncclick
 from dishka.integrations.click import FromDishka
 
-from shared.providers.env import Env
 from utils.asyncclick_dishka import cli_inject
 
 from ..core.services import CreateUserService
@@ -18,10 +17,8 @@ async def create_superuser(
     name: str,
     last_name: str,
     password: str,
-    env: FromDishka[Env],
     create_user_service: FromDishka[CreateUserService],
 ):
-    print(env.db_dsn)
     await create_user_service(
         first_name=name,
         last_name=last_name,
