@@ -10,6 +10,7 @@ from ..core.services import PasswordHashService
 class VerifyUserPasswordOut:
     is_valid: bool
     user_oid: str | None = None
+    is_superuser: bool | None = None
 
 
 @dataclass
@@ -33,4 +34,8 @@ class VerifyUserPassword:
         if not is_valid:
             return VerifyUserPasswordOut(is_valid=False)
 
-        return VerifyUserPasswordOut(is_valid=True, user_oid=user.oid)
+        return VerifyUserPasswordOut(
+            is_valid=True,
+            user_oid=user.oid,
+            is_superuser=user.is_superuser,
+        )

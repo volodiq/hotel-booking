@@ -6,6 +6,7 @@ from dataclasses import dataclass
 class VerifyUserPasswordOut:
     is_valid: bool
     user_oid: str | None
+    is_superuser: bool | None
 
 
 class UsersGateway(ABC):
