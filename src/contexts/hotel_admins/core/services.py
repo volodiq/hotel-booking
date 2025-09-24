@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
+from shared.providers.security import Principal
+
 from . import entities, errors, repositories, values
 
 
@@ -13,6 +15,7 @@ class PasswordHashService(ABC):
 class CreateHotelAdminService:
     hotel_admin_repository: repositories.HotelAdminRepository
     password_hash_service: PasswordHashService
+    principal: Principal
 
     async def __call__(
         self,
@@ -23,6 +26,9 @@ class CreateHotelAdminService:
         raw_password: str,
         email: str,
     ):
+        if "superuser" not in self.principal.roles:
+            raise errors.HotelAdminCreateForbidden()
+
         exists_hotel_admin = await self.hotel_admin_repository.get_hotel_admin_by_phone(phone)
         if exists_hotel_admin is not None:
             raise errors.HotelAdminAlreadyExists()

@@ -1,6 +1,8 @@
 from dishka import Provider, Scope, provide
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from shared.providers.security import Principal
+
 from .core.repositories import HotelAdminRepository
 from .core.services import CreateHotelAdminService, PasswordHashService
 from .infra.repositories import SAHotelAdminRepository
@@ -21,8 +23,10 @@ class UsersProvider(Provider):
         self,
         hotel_admin_repository: HotelAdminRepository,
         password_hash_service: PasswordHashService,
+        principal: Principal,
     ) -> CreateHotelAdminService:
         return CreateHotelAdminService(
             hotel_admin_repository=hotel_admin_repository,
             password_hash_service=password_hash_service,
+            principal=principal,
         )

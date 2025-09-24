@@ -119,3 +119,9 @@ class HotelAdminAlreadyBanned(DomainError):
     @property
     def details(self) -> str:
         return "Данный администратор уже заблокирован"
+
+
+class HotelAdminCreateForbidden(DomainError):
+    @property
+    def details(self) -> str:
+        return "Вам запрещено создание администратора отелей"
