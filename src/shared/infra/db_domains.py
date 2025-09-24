@@ -4,7 +4,7 @@ from typing import Annotated
 from sqlalchemy import types
 from sqlalchemy.orm import mapped_column
 
-from shared.utils import utcnow
+from utils.utcnow import utcnow
 
 
 DateTime = Annotated[

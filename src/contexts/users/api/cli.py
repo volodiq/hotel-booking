@@ -2,7 +2,7 @@ import asyncclick
 from dishka.integrations.click import FromDishka
 
 from shared.providers.env import Env
-from shared.utils import cli_inject
+from utils.asyncclick_dishka import cli_inject
 
 from ..core.services import CreateUserService
 
