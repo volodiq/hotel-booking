@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from uuid import uuid4
 
-from shared.utils import utcnow
+from utils.utcnow import utcnow
 
 
 @dataclass(eq=False, frozen=True)

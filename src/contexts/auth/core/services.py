@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
-from shared.providers.security import Principal, TokenService, TokenType
+from tech.security.dtos import Principal, TokenType
+from tech.security.services import TokenService
 
 from . import errors
 from .gateways import UsersGateway

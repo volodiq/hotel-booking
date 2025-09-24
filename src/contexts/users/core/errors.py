@@ -1,4 +1,4 @@
-from shared.core.errors import DomainError
+from seedwork.errors import DomainError
 
 
 class UserAlreadyExists(DomainError):
