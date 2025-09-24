@@ -3,6 +3,7 @@ from dishka.integrations.fastapi import FastapiProvider
 from fastapi import Request
 
 from contexts.auth.di import AuthProvider
+from contexts.hotel_admins.di import HotelAdminProvider
 from contexts.users.di import UsersProvider
 from shared.providers.db import DBProvider
 from shared.providers.env import EnvProvider
@@ -35,4 +36,5 @@ container = make_async_container(
     AuthProvider(),
     SecurityProvider(),
     PrincipalProvider(),
+    HotelAdminProvider(),
 )
