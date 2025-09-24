@@ -7,7 +7,7 @@ from app.container import container
 from contexts.auth.api.http_router import router as auth_router
 from contexts.hotel_admins.api.http_router import router as hotel_admins_router
 from contexts.users.api.http_router import router as users_router
-from shared.core.errors import DomainError
+from seedwork.errors import DomainError
 from shared.providers.security import InvalidTokenData, SecurityException
 
 

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Self
 
-from shared.core.entity import Entity
+from seedwork.entity import Entity
 
 from . import errors, values
 
