@@ -5,7 +5,6 @@ from fastapi import Request
 from contexts.auth.di import AuthProvider
 from contexts.hotel_admins.di import HotelAdminProvider
 from contexts.users.di import UsersProvider
-from shared.providers.db import DBProvider
 from tech.di import TechProvider
 from tech.security.dtos import Principal, TokenType
 from tech.security.errors import NotAuthenticated
@@ -27,7 +26,6 @@ class PrincipalProvider(Provider):
 container = make_async_container(
     FastapiProvider(),
     TechProvider(),
-    DBProvider(),
     UsersProvider(),
     AuthProvider(),
     PrincipalProvider(),
