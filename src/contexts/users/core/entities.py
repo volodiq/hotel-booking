@@ -11,3 +11,4 @@ class User(Entity):
     first_name: values.FirstName
     last_name: values.LastName
     password_hash: str
+    is_superuser: bool = False

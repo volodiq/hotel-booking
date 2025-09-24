@@ -22,6 +22,7 @@ class CreateUserService:
         last_name: str,
         phone: str,
         password: str,
+        is_superuser: bool = False,
     ):
         exists_user = await self.repository.get_user_by_phone(values.PhoneNumber(phone))
         if exists_user:
@@ -35,6 +36,7 @@ class CreateUserService:
             last_name=values.LastName(last_name),
             phone=values.PhoneNumber(phone),
             password_hash=password_hash,
+            is_superuser=is_superuser,
         )
 
         return await self.repository.create_user(user)
