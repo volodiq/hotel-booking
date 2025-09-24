@@ -1,7 +1,7 @@
 from dishka import Provider, Scope, provide
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from shared.providers.security import Principal
+from tech.security.dtos import Principal
 
 from .core.repositories import HotelAdminRepository
 from .core.services import CreateHotelAdminService, PasswordHashService

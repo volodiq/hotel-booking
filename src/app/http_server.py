@@ -8,7 +8,7 @@ from contexts.auth.api.http_router import router as auth_router
 from contexts.hotel_admins.api.http_router import router as hotel_admins_router
 from contexts.users.api.http_router import router as users_router
 from seedwork.errors import DomainError
-from shared.providers.security import InvalidTokenData, SecurityException
+from tech.security.errors import InvalidTokenData, SecurityException
 
 
 async def domain_error_handler(request: Request, exc: DomainError):
