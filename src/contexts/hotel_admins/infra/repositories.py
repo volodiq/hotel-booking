@@ -17,7 +17,7 @@ class SAHotelAdminRepository(repositories.HotelAdminRepository, SARepository[mod
             email=hotel_admin.email.value,
             password_hash=hotel_admin.password_hash,
             is_banned=hotel_admin.is_banned,
-            created_at=hotel_admin.created_at,
+            created_at=hotel_admin.created_at.replace(tzinfo=None),
         )
         self.create(model)
 
