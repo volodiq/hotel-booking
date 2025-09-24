@@ -1,7 +1,6 @@
 from dishka.integrations.fastapi import DishkaRoute, FromDishka
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter
 
-from ..core import errors
 from ..core.services import AuthenticateUserService, RefreshTokenService
 from . import http_schemas
 
@@ -29,12 +28,5 @@ async def refresh(
     data: http_schemas.SRefreshTokenIn,
     refresh_token_service: FromDishka[RefreshTokenService],
 ):
-    try:
-        access_token = await refresh_token_service(data.refresh_token)
-    except errors.InvalidTokenData as e:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=e.details,
-        )
-
+    access_token = await refresh_token_service(data.refresh_token)
     return http_schemas.SRefreshTokenOut(access_token=access_token)

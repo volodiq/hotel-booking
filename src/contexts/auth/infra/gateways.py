@@ -21,4 +21,5 @@ class InternalUsersGateway(UsersGateway):
         return VerifyUserPasswordOut(
             is_valid=raw_data.is_valid,
             user_oid=raw_data.user_oid,
+            is_superuser=raw_data.is_superuser,
         )

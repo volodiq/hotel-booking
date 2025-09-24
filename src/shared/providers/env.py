@@ -36,4 +36,4 @@ class EnvProvider(Provider):
         app_run_as_service = getenv("APP_RUN_AS_SERVICE")
         if app_run_as_service:
             return Env()  # type: ignore
-        return Env(DB_NAME="localhost")  # type: ignore
+        return Env(DBMS_HOST="localhost")  # type: ignore

@@ -1,18 +1,15 @@
-from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
+from shared.providers.security import Principal, TokenService, TokenType
+
 from . import errors
-from .dtos import TokenPair
 from .gateways import UsersGateway
 
 
 @dataclass
-class TokenService(ABC):
-    @abstractmethod
-    def create_token_pair(self, user_oid: str) -> TokenPair: ...
-
-    @abstractmethod
-    def refresh_access_token(self, refresh_token: str) -> str: ...
+class TokenPair:
+    access_token: str
+    refresh_token: str
 
 
 @dataclass
@@ -25,7 +22,14 @@ class AuthenticateUserService:
         if verification_result.user_oid is None or not verification_result.is_valid:
             raise errors.InvalidCredentials()
 
-        return self.token_service.create_token_pair(verification_result.user_oid)
+        roles = ["user"]
+        if verification_result.is_superuser:
+            roles.append("superuser")
+
+        principal = Principal(sub=verification_result.user_oid, roles=roles)
+        access = self.token_service.encode(principal, TokenType.ACCESS)
+        refresh = self.token_service.encode(principal, TokenType.REFRESH)
+        return TokenPair(access_token=access, refresh_token=refresh)
 
 
 @dataclass
@@ -33,4 +37,5 @@ class RefreshTokenService:
     token_service: TokenService
 
     async def __call__(self, refresh_token: str) -> str:
-        return self.token_service.refresh_access_token(refresh_token)
+        principal = self.token_service.decode(refresh_token, TokenType.REFRESH)
+        return self.token_service.encode(principal, TokenType.ACCESS)
