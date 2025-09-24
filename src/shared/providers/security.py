@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import timedelta
 from enum import StrEnum, auto
 from time import time
@@ -70,6 +70,7 @@ class TokenType(StrEnum):
 @dataclass
 class Principal:
     sub: str
+    roles: list[str] = field(default_factory=list)
 
 
 class TokenService(ABC):
@@ -98,6 +99,7 @@ class PyJWTTokenService(TokenService):
         return jwt.encode(
             payload={
                 "sub": principal.sub,
+                "roles": principal.roles,
                 "exp": current_stamp + ttl_secs,
                 "token_type": token_type.value,
             },
@@ -120,6 +122,7 @@ class PyJWTTokenService(TokenService):
 
         return Principal(
             sub=payload["sub"],
+            roles=payload.get("roles", []),
         )
 
 

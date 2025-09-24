@@ -22,7 +22,7 @@ class AuthenticateUserService:
         if verification_result.user_oid is None or not verification_result.is_valid:
             raise errors.InvalidCredentials()
 
-        principal = Principal(sub=verification_result.user_oid)
+        principal = Principal(sub=verification_result.user_oid, roles=["user"])
         access = self.token_service.encode(principal, TokenType.ACCESS)
         refresh = self.token_service.encode(principal, TokenType.REFRESH)
         return TokenPair(access_token=access, refresh_token=refresh)
