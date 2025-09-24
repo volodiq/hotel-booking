@@ -5,6 +5,7 @@ from fastapi.openapi.utils import get_openapi
 from app import models_registry  # noqa: F401
 from app.container import container
 from contexts.auth.api.http_router import router as auth_router
+from contexts.hotel_admins.api.http_router import router as hotel_admins_router
 from contexts.users.api.http_router import router as users_router
 from shared.core.errors import DomainError
 from shared.providers.security import InvalidTokenData, SecurityException
@@ -58,6 +59,7 @@ def create_app() -> FastAPI:
 
     app.include_router(users_router)
     app.include_router(auth_router)
+    app.include_router(hotel_admins_router)
     setup_dishka(container=container, app=app)
 
     app.openapi_schema = get_custom_openapi(app)
