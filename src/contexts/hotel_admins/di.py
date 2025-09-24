@@ -9,7 +9,7 @@ from .infra.repositories import SAHotelAdminRepository
 from .infra.services import SHA256PasswordHashService
 
 
-class UsersProvider(Provider):
+class HotelAdminProvider(Provider):
     @provide(scope=Scope.REQUEST)
     async def hotel_admin_repository(self, session: AsyncSession) -> HotelAdminRepository:
         return SAHotelAdminRepository(session)
@@ -18,7 +18,7 @@ class UsersProvider(Provider):
     async def hash_service(self) -> PasswordHashService:
         return SHA256PasswordHashService()
 
-    @provide
+    @provide(scope=Scope.REQUEST)
     async def create_hotel_admin_service(
         self,
         hotel_admin_repository: HotelAdminRepository,
