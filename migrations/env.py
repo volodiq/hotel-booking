@@ -1,6 +1,5 @@
 import asyncio
 from logging.config import fileConfig
-from os import getenv
 
 from alembic import context
 from sqlalchemy import pool
@@ -11,13 +10,9 @@ from app import models_registry
 from kernel.env import get_env
 
 
-app_run_as_service = getenv("APP_RUN_AS_SERVICE")
-env = get_env()
-
-
-# this is the Alembic Config object, which provides
-# access to the values within the .ini file in use.
 config = context.config
+
+env = get_env()
 config.set_main_option("sqlalchemy.url", env.db_dsn)
 
 # Interpret the config file for Python logging.
@@ -25,16 +20,7 @@ config.set_main_option("sqlalchemy.url", env.db_dsn)
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# add your model's MetaData object here
-# for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
 target_metadata = models_registry.DBModel.metadata
-
-# other values from the config, defined by the needs of env.py,
-# can be acquired:
-# my_important_option = config.get_main_option("my_important_option")
-# ... etc.
 
 
 def run_migrations_offline() -> None:
