@@ -8,14 +8,11 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from app import models_registry
-from tech.env import Env
+from kernel.env import get_env
 
 
 app_run_as_service = getenv("APP_RUN_AS_SERVICE")
-if app_run_as_service:
-    env = Env()  # type: ignore
-else:
-    env = Env(DBMS_HOST="localhost")  # type: ignore
+env = get_env()
 
 
 # this is the Alembic Config object, which provides

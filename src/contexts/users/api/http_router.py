@@ -17,6 +17,10 @@ async def create_user(
     data: http_schemas.SCreateUser,
     create_user_service: FromDishka[CreateUserService],
 ):
+    """
+    Создание пользователя.
+    """
+
     await create_user_service(
         first_name=data.first_name,
         last_name=data.last_name,

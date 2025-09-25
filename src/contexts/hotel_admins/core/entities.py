@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Self
 
-from seedwork.entity import Entity
+from kernel.seedwork.entity import Entity
 
 from . import errors, values
 
@@ -10,7 +10,7 @@ from . import errors, values
 class HotelAdmin(Entity):
     """
     Администратор отеля/отелей
-    Добавляется root-администратором, по договоренности.
+    Регистрируется администратором.
     """
 
     first_name: values.FirstName

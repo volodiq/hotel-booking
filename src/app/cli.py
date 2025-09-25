@@ -3,7 +3,7 @@ from dishka.integrations.click import setup_dishka
 
 from app.container import container
 from contexts.users.api.cli import create_superuser
-from seedwork.errors import DomainError
+from kernel.seedwork.errors import DomainError
 
 
 @asyncclick.group()

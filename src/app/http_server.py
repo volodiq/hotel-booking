@@ -7,8 +7,8 @@ from app.container import container
 from contexts.auth.api.http_router import router as auth_router
 from contexts.hotel_admins.api.http_router import router as hotel_admins_router
 from contexts.users.api.http_router import router as users_router
-from seedwork.errors import DomainError
-from tech.security.errors import InvalidTokenData, SecurityException
+from kernel.security.errors import InvalidTokenData, SecurityException
+from kernel.seedwork.errors import DomainError
 
 
 async def domain_error_handler(request: Request, exc: DomainError):

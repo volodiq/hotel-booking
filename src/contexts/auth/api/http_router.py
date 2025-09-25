@@ -17,6 +17,10 @@ async def login(
     data: http_schemas.SLoginIn,
     authenticate_user_service: FromDishka[AuthenticateUserService],
 ):
+    """
+    Получение токенов для аутентификации.
+    """
+
     return await authenticate_user_service(
         phone=data.phone,
         password=data.password,
@@ -28,5 +32,9 @@ async def refresh(
     data: http_schemas.SRefreshTokenIn,
     refresh_token_service: FromDishka[RefreshTokenService],
 ):
+    """
+    Обновление токена доступа.
+    """
+
     access_token = await refresh_token_service(data.refresh_token)
     return http_schemas.SRefreshTokenOut(access_token=access_token)

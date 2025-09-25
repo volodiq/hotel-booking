@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from faker import Faker
 
-from seedwork.entity import Entity
+from kernel.seedwork.entity import Entity
 
 
 @dataclass(eq=False, frozen=True)
