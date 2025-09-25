@@ -1,22 +1,18 @@
 from datetime import timedelta
-from os import getenv
 from typing import AsyncIterable
 
 from dishka import Provider, Scope, provide
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from .db_session import get_session_pool
-from .env import Env
+from .env import Env, get_env
 from .security.services import PyJWTTokenService, TokenService
 
 
 class KernelProvider(Provider):
     @provide(scope=Scope.APP)
     def env(self) -> Env:
-        app_run_as_service = getenv("APP_RUN_AS_SERVICE")
-        if app_run_as_service:
-            return Env()  # type: ignore
-        return Env(DBMS_HOST="localhost")  # type: ignore
+        return get_env()
 
     @provide(scope=Scope.APP)
     def token_service(self, env: Env) -> TokenService:
