@@ -15,7 +15,7 @@ class SARepository(Generic[MT]):
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    async def get_by_oid(self, oid: int) -> MT | None:
+    async def get_by_oid(self, oid: str) -> MT | None:
         stmt = sql.select(self.model).where(self.model.oid == oid)
         res = await self.session.scalars(stmt)
         return res.one_or_none()
