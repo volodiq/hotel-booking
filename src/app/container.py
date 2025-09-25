@@ -2,10 +2,10 @@ from dishka import Provider, Scope, make_async_container, provide
 from dishka.integrations.fastapi import FastapiProvider
 from fastapi import Request
 
-from contexts.auth.di import AuthProvider
-from contexts.hotel_admins.di import HotelAdminProvider
-from contexts.users.di import UsersProvider
-from kernel.di import KernelProvider
+from contexts.auth.di import auth_provider
+from contexts.hotel_admins.di import hotel_admin_provider
+from contexts.users.di import users_provider
+from kernel.di import kernel_provider
 from kernel.security.dtos import Principal, TokenType
 from kernel.security.errors import NotAuthenticated
 from kernel.security.services import TokenService
@@ -25,9 +25,9 @@ class PrincipalProvider(Provider):
 
 container = make_async_container(
     FastapiProvider(),
-    KernelProvider(),
-    UsersProvider(),
-    AuthProvider(),
     PrincipalProvider(),
-    HotelAdminProvider(),
+    kernel_provider,
+    users_provider,
+    auth_provider,
+    hotel_admin_provider,
 )
