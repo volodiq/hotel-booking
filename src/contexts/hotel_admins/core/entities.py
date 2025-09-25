@@ -10,7 +10,7 @@ from . import errors, values
 class HotelAdmin(Entity):
     """
     Администратор отеля/отелей
-    Добавляется root-администратором, по договоренности.
+    Регистрируется администратором.
     """
 
     first_name: values.FirstName

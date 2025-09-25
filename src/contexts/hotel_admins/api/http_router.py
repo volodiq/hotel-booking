@@ -18,6 +18,11 @@ async def create_hotel_admin(
     data: http_schemas.SCreateHotelAdmin,
     create_hotel_admin_service: FromDishka[CreateHotelAdminService],
 ):
+    """
+    Создание администратора отеля.
+    Создавать может только администратор.
+    """
+
     try:
         await create_hotel_admin_service(
             first_name=data.first_name,

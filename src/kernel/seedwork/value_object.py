@@ -16,10 +16,8 @@ class ValueObject(ABC, Generic[VT]):
     @abstractmethod
     def validate(self):
         """
-        Проверяет значение, если оно не валидно, то генерирует
-        core.domain.errors.DomainError
+        Проверяет значение, если оно не валидно, то генерирует доменное исключение.
         """
-
         ...
 
     @property
