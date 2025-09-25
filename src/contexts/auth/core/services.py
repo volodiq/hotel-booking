@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from tech.security.dtos import Principal, TokenType
-from tech.security.services import TokenService
+from kernel.security.dtos import Principal, TokenType
+from kernel.security.services import TokenService
 
 from . import errors
 from .gateways import UsersGateway

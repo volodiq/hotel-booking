@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
-from tech.env import Env
+from kernel.env import Env
 
 
 def get_session_pool(env: Env) -> async_sessionmaker:

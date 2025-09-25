@@ -2,7 +2,7 @@ from string import punctuation
 
 import phonenumbers
 
-from seedwork.value_object import ValueObject
+from kernel.seedwork.value_object import ValueObject
 
 from . import errors
 

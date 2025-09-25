@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from seedwork.entity import Entity
+from kernel.seedwork.entity import Entity
 
 from . import values
 

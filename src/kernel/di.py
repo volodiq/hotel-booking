@@ -10,7 +10,7 @@ from .env import Env
 from .security.services import PyJWTTokenService, TokenService
 
 
-class TechProvider(Provider):
+class KernelProvider(Provider):
     @provide(scope=Scope.APP)
     def env(self) -> Env:
         app_run_as_service = getenv("APP_RUN_AS_SERVICE")

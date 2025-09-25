@@ -1,7 +1,7 @@
 from dishka import Provider, Scope, provide
 
 from contexts.users.api.internal import VerifyUserPassword
-from tech.security.services import TokenService
+from kernel.security.services import TokenService
 
 from .core.gateways import UsersGateway
 from .core.services import AuthenticateUserService, RefreshTokenService

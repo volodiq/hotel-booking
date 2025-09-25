@@ -8,7 +8,7 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from app import models_registry
-from tech.env import Env
+from kernel.env import Env
 
 
 app_run_as_service = getenv("APP_RUN_AS_SERVICE")

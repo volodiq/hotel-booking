@@ -1,4 +1,4 @@
-from seedwork.errors import DomainError
+from kernel.seedwork.errors import DomainError
 
 
 class UserAlreadyExists(DomainError):

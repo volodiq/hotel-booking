@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
-from tech.security.dtos import Principal
+from kernel.security.dtos import Principal
 
 from . import entities, errors, repositories, values
 
