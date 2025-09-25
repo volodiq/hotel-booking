@@ -1,12 +1,6 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
 
-
-@dataclass
-class VerifyUserPasswordOut:
-    is_valid: bool
-    user_oid: str | None
-    is_superuser: bool | None
+from .dtos import VerifyUserPasswordOut
 
 
 class UsersGateway(ABC):

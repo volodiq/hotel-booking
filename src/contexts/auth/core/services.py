@@ -4,13 +4,8 @@ from kernel.security.dtos import Principal, TokenType
 from kernel.security.services import TokenService
 
 from . import errors
+from .dtos import TokenPair
 from .gateways import UsersGateway
-
-
-@dataclass
-class TokenPair:
-    access_token: str
-    refresh_token: str
 
 
 @dataclass
