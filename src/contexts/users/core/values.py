@@ -1,6 +1,6 @@
 import phonenumbers
 
-from kernel.seedwork.value_object import ValueObject
+from system.seedwork.value_object import ValueObject
 
 from . import errors
 

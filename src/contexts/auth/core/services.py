@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from kernel.security.dtos import Principal, TokenType
-from kernel.security.services import TokenService
+from system.security.dtos import Principal, TokenType
+from system.security.services import TokenService
 
 from . import errors
 from .dtos import TokenPair

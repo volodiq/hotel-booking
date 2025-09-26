@@ -1,6 +1,6 @@
 from string import punctuation
 
-from kernel.seedwork.value_object import ValueObject
+from system.seedwork.value_object import ValueObject
 
 from ..errors import password_errors
 

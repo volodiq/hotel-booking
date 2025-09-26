@@ -3,8 +3,8 @@ from typing import Any, Callable, Coroutine
 from fastapi import HTTPException, Request, status
 from starlette.responses import Response
 
-from kernel.security.errors import InvalidTokenData, SecurityException
-from kernel.seedwork.errors import DomainError
+from system.security.errors import InvalidTokenData, SecurityException
+from system.seedwork.errors import DomainError
 
 
 async def domain_error_handler(request: Request, exc: DomainError):

@@ -1,4 +1,4 @@
-from kernel.seedwork.errors import DomainError
+from system.seedwork.errors import DomainError
 
 
 class PasswordEmpty(DomainError):

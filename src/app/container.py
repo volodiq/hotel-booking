@@ -4,10 +4,10 @@ from fastapi import Request
 
 from contexts.auth.di import auth_provider
 from contexts.users.di import users_provider
-from kernel.di import kernel_provider
-from kernel.security.dtos import Principal, TokenType
-from kernel.security.errors import NotAuthenticated
-from kernel.security.services import TokenService
+from system.di import kernel_provider
+from system.security.dtos import Principal, TokenType
+from system.security.errors import NotAuthenticated
+from system.security.services import TokenService
 
 
 class PrincipalProvider(Provider):
