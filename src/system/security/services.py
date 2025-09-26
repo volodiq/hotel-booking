@@ -49,11 +49,11 @@ class PyJWTTokenService(TokenService):
             raise errors.InvalidTokenFormat()
         except jwt.InvalidSignatureError:
             raise errors.InvalidTokenSignature()
+        except jwt.ExpiredSignatureError:
+            raise errors.ExpiredToken()
 
         if payload["token_type"] != token_type:
             raise errors.InvalidTokenType()
-        if payload["exp"] < int(time()):
-            raise errors.ExpiredToken()
 
         return dtos.Principal(
             sub=payload["sub"],

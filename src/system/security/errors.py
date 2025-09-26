@@ -1,7 +1,3 @@
-from dataclasses import dataclass
-
-
-@dataclass
 class SecurityException(Exception):
     """
     Ошибка безопасности.
@@ -13,41 +9,25 @@ class SecurityException(Exception):
         return "Токен не валиден"
 
 
-class NotAuthenticated(SecurityException):
-    @property
-    def details(self) -> str:
-        return "Пользователь не авторизован"
-
-
 class InvalidTokenFormat(SecurityException):
     @property
     def details(self) -> str:
         return "Передан токен в невалидном формате"
 
 
-class InvalidTokenData(SecurityException):
-    """
-    Токен был прочитан, но содержит невалидные данные.
-    """
-
-    @property
-    def details(self) -> str:
-        return "Передан невалидный токен"
-
-
-class InvalidTokenSignature(InvalidTokenData):
+class InvalidTokenSignature(SecurityException):
     @property
     def details(self) -> str:
         return "Сигнатура токена невалидна"
 
 
-class ExpiredToken(InvalidTokenData):
+class ExpiredToken(SecurityException):
     @property
     def details(self) -> str:
         return "Токен устарел"
 
 
-class InvalidTokenType(InvalidTokenData):
+class InvalidTokenType(SecurityException):
     @property
     def details(self) -> str:
         return "Токен имеет невалидный тип"

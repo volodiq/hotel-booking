@@ -1,12 +1,11 @@
 from dishka import Provider, Scope, make_async_container, provide
 from dishka.integrations.fastapi import FastapiProvider
-from fastapi import Request
+from fastapi import HTTPException, Request, status
 
 from contexts.auth.di import auth_provider
 from contexts.users.di import users_provider
 from system.di import kernel_provider
 from system.security.dtos import Principal, TokenType
-from system.security.errors import NotAuthenticated
 from system.security.services import TokenService
 
 
@@ -15,10 +14,16 @@ class PrincipalProvider(Provider):
     async def principal(self, request: Request, token_service: TokenService) -> Principal:
         auth_header = request.headers.get("Authorization")
         if not auth_header:
-            raise NotAuthenticated()
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Запрос не содержит заголовка авторизации",
+            )
         schema, _, token = auth_header.partition(" ")
         if schema != "Bearer":
-            raise NotAuthenticated()
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Данная схема авторизации не поддерживается",
+            )
         return token_service.decode(token, TokenType.ACCESS)
 
 
