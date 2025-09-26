@@ -32,7 +32,7 @@ target-version = "py312"
 extend-exclude = [".venv", "__pycache__", ".git", ".mypy_cache", "docker"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["src.app", "src.contexts", "src.core", "src.providers"]
+known-first-party = ["src.app", "src.contexts", "src.kernel", "src.shared", "src.utils"]
 combine-as-imports = true
 force-sort-within-sections = true
 lines-after-imports = 2
