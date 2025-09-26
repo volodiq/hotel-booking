@@ -1,7 +1,7 @@
 import asyncclick
 from dishka.integrations.click import setup_dishka
 
-from app.container import container
+from app.cli.container import container
 from contexts.users.api.cli import create_superuser
 from system.seedwork.errors import DomainError
 

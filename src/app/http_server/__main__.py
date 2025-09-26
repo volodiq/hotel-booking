@@ -4,7 +4,7 @@ from fastapi.openapi.utils import get_openapi
 import uvicorn
 
 from app import models_registry  # noqa: F401
-from app.container import container
+from app.http_server.container import container
 from app.http_server.handlers import exceptions_handlers
 from app.http_server.router import router
 
