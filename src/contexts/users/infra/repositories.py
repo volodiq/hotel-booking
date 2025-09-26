@@ -20,6 +20,7 @@ class SAUserRepository(UserRepository, SARepository[UserModel]):
             created_at=user.created_at.replace(tzinfo=None),
             password_hash=user.password_hash,
             is_superuser=user.is_superuser,
+            is_hotel_admin=user.is_hotel_admin,
         )
         self.create(model)
 
@@ -38,4 +39,5 @@ class SAUserRepository(UserRepository, SARepository[UserModel]):
             created_at=user_db.created_at,
             password_hash=user_db.password_hash,
             is_superuser=user_db.is_superuser,
+            is_hotel_admin=user_db.is_hotel_admin,
         )

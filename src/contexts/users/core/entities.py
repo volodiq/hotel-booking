@@ -12,3 +12,4 @@ class User(Entity):
     last_name: values.LastName
     password_hash: str
     is_superuser: bool = False
+    is_hotel_admin: bool = False

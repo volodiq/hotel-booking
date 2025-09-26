@@ -21,6 +21,8 @@ class AuthenticateUserService:
         roles = ["user"]
         if verification_result.is_superuser:
             roles.append("superuser")
+        if verification_result.is_hotel_admin:
+            roles.append("hotel_admin")
 
         principal = Principal(sub=verification_result.user_oid, roles=roles)
         access = self.token_service.encode(principal, TokenType.ACCESS)

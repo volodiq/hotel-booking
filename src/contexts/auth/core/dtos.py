@@ -12,3 +12,4 @@ class VerifyUserPasswordOut:
     is_valid: bool
     user_oid: str | None
     is_superuser: bool | None
+    is_hotel_admin: bool | None
