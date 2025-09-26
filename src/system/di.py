@@ -22,8 +22,8 @@ async def get_db_session(session_pool: async_sessionmaker) -> AsyncIterable[Asyn
         yield session
 
 
-kernel_provider = Provider()
-kernel_provider.provide(get_env, scope=Scope.APP)
-kernel_provider.provide(get_session_pool, scope=Scope.APP)
-kernel_provider.provide(get_token_service, scope=Scope.APP)
-kernel_provider.provide(get_db_session, scope=Scope.REQUEST)
+system_provider = Provider()
+system_provider.provide(get_env, scope=Scope.APP)
+system_provider.provide(get_session_pool, scope=Scope.APP)
+system_provider.provide(get_token_service, scope=Scope.APP)
+system_provider.provide(get_db_session, scope=Scope.REQUEST)
