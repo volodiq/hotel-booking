@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+import secrets
 
 from shared.core.values import Password
 
@@ -42,3 +43,22 @@ class CreateUserService:
         )
 
         return await self.repository.create_user(user)
+
+
+@dataclass
+class GetUserByPhoneAndPasswordService:
+    user_repository: UserRepository
+    password_hash_service: PasswordHashService
+
+    async def __call__(self, raw_phone: str, raw_password: str) -> User | None:
+        phone = values.PhoneNumber(raw_phone)
+        user = await self.user_repository.get_user_by_phone(phone)
+        if user is None:
+            return None
+
+        password_hash = self.password_hash_service.calculate_password_hash(raw_password)
+        is_valid = secrets.compare_digest(user.password_hash, password_hash)
+        if not is_valid:
+            return None
+
+        return user
