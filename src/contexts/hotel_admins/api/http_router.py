@@ -15,7 +15,7 @@ router = APIRouter(
 
 @router.post("/", openapi_extra={"security": [{"HTTPBearer": []}]})
 async def create_hotel_admin(
-    data: http_schemas.SCreateHotelAdmin,
+    data: http_schemas.SCreateHotelAdminIn,
     create_hotel_admin_service: FromDishka[CreateHotelAdminService],
 ):
     """
