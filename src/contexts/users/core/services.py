@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 import secrets
 
+from kernel.security.dtos import Principal
 from shared.core.values import Password
 
 from . import errors, values
@@ -64,3 +65,20 @@ class GetUserByPhoneAndPasswordService:
             return None
 
         return user
+
+
+@dataclass
+class MakeHotelAdminService:
+    user_repository: UserRepository
+    principal: Principal
+
+    async def __call__(self, user_oid: str):
+        if "superuser" not in self.principal.roles:
+            raise errors.MakeHotelAdminForbidden()
+
+        user = await self.user_repository.get_user_by_oid(user_oid)
+        if user is None:
+            raise errors.UserNotFound()
+
+        user = user.make_hotel_admin()
+        return await self.user_repository.update_user(user)

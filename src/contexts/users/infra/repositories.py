@@ -11,6 +11,19 @@ from .models import UserModel
 class SAUserRepository(UserRepository, SARepository[UserModel]):
     model = UserModel
 
+    @classmethod
+    def to_entity(cls, model: UserModel) -> User:
+        return User(
+            oid=model.oid,
+            first_name=values.FirstName(model.first_name),
+            last_name=values.LastName(model.last_name),
+            phone=values.PhoneNumber(model.phone_number),
+            created_at=model.created_at,
+            password_hash=model.password_hash,
+            is_superuser=model.is_superuser,
+            is_hotel_admin=model.is_hotel_admin,
+        )
+
     async def create_user(self, user: User):
         model = UserModel(
             oid=user.oid,
@@ -24,6 +37,13 @@ class SAUserRepository(UserRepository, SARepository[UserModel]):
         )
         self.create(model)
 
+    async def get_user_by_oid(self, oid: str) -> User | None:
+        model = await self.get_by_oid(oid)
+        if not model:
+            return None
+
+        return self.to_entity(model)
+
     async def get_user_by_phone(self, phone: values.PhoneNumber) -> User | None:
         stmt = sql.select(UserModel).where(UserModel.phone_number == phone.value)
         res = await self.session.scalars(stmt)
@@ -31,13 +51,20 @@ class SAUserRepository(UserRepository, SARepository[UserModel]):
         if not user_db:
             return None
 
-        return User(
-            oid=user_db.oid,
-            first_name=values.FirstName(user_db.first_name),
-            last_name=values.LastName(user_db.last_name),
-            phone=values.PhoneNumber(user_db.phone_number),
-            created_at=user_db.created_at,
-            password_hash=user_db.password_hash,
-            is_superuser=user_db.is_superuser,
-            is_hotel_admin=user_db.is_hotel_admin,
+        return self.to_entity(user_db)
+
+    async def update_user(self, user: User):
+        stmt = (
+            sql.update(UserModel)
+            .where(UserModel.oid == user.oid)
+            .values(
+                first_name=user.first_name.value,
+                last_name=user.last_name.value,
+                phone_number=user.phone.value,
+                created_at=user.created_at.replace(tzinfo=None),
+                password_hash=user.password_hash,
+                is_superuser=user.is_superuser,
+                is_hotel_admin=user.is_hotel_admin,
+            )
         )
+        await self.session.execute(stmt)

@@ -47,3 +47,21 @@ class LastNameTooLong(DomainError):
     @property
     def details(self) -> str:
         return "Фамилия пользователя слишком длинная"
+
+
+class UserNotFound(DomainError):
+    @property
+    def details(self) -> str:
+        return "Пользователь не найден"
+
+
+class MakeHotelAdminForbidden(DomainError):
+    @property
+    def details(self) -> str:
+        return "Не достаточно прав для назначения администраторов отелей"
+
+
+class UserAlreadyHotelAdmin(DomainError):
+    @property
+    def details(self) -> str:
+        return "Пользователь уже является администратором отеля"
