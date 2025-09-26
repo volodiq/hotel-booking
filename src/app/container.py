@@ -3,7 +3,6 @@ from dishka.integrations.fastapi import FastapiProvider
 from fastapi import Request
 
 from contexts.auth.di import auth_provider
-from contexts.hotel_admins.di import hotel_admin_provider
 from contexts.users.di import users_provider
 from kernel.di import kernel_provider
 from kernel.security.dtos import Principal, TokenType
@@ -29,5 +28,4 @@ container = make_async_container(
     kernel_provider,
     users_provider,
     auth_provider,
-    hotel_admin_provider,
 )

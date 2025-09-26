@@ -12,3 +12,4 @@ class UserModel(DBModel):
     phone_number: Mapped[String] = mapped_column(index=True)
     password_hash: Mapped[String]
     is_superuser: Mapped[Bool]
+    is_hotel_admin: Mapped[Bool]
