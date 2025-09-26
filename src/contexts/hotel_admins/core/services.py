@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
 from kernel.security.dtos import Principal
+from shared.core.values import Password
 
 from . import entities, errors, repositories, values
 
@@ -33,7 +34,7 @@ class CreateHotelAdminService:
         if exists_hotel_admin is not None:
             raise errors.HotelAdminAlreadyExists()
 
-        password = values.Password(raw_password)
+        password = Password(raw_password)
         password_hash = self.password_hash_service.calculate_password_hash(password.value)
 
         hotel_admin = entities.HotelAdmin(

@@ -1,5 +1,3 @@
-from string import punctuation
-
 import email_validator
 import phonenumbers
 
@@ -77,21 +75,3 @@ class Email(ValueObject[str]):
     @property
     def value(self):
         return email_validator.validate_email(self._value).normalized
-
-
-class Password(ValueObject[str]):
-    def validate(self):
-        if not self.value:
-            raise errors.PasswordEmpty()
-        if len(self.value) > 30:
-            raise errors.PasswordTooLong()
-        if len(self.value) < 8:
-            raise errors.PasswordTooShort()
-        if not any(char.isdigit() for char in self.value):
-            raise errors.PasswordNotContainsDigit()
-        if not any(char.isupper() for char in self.value):
-            raise errors.PasswordNotContainsUppercase()
-        if not any(char.islower() for char in self.value):
-            raise errors.PasswordNotContainsLowercase()
-        if not any(char in punctuation for char in self.value):
-            raise errors.PasswordNotContainsSpecialSymbol()

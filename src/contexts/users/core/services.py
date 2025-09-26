@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
+from shared.core.values import Password
+
 from . import errors, values
 from .entities import User
 from .repositories import UserRepository
@@ -28,7 +30,7 @@ class CreateUserService:
         if exists_user:
             raise errors.UserAlreadyExists()
 
-        raw_password = values.RawPassword(password)
+        raw_password = Password(password)
         password_hash = self.password_hash_service.calculate_password_hash(raw_password.value)
 
         user = User(
