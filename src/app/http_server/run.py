@@ -5,7 +5,7 @@ import uvicorn
 from app import models_registry  # noqa: F401
 from app.container import make_container
 from app.http_server.controllers import setup_controllers
-from app.http_server.errors_handlers import setup_exceptions_handlers
+from app.http_server.error_handlers import setup_exceptions_handlers
 
 
 def create_app() -> FastAPI:
