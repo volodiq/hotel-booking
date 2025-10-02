@@ -37,7 +37,7 @@ class CreateUser:
             is_hotel_admin=is_hotel_admin,
         )
 
-        return await self.repository.create_user(user)
+        return await self.repository.save(user)
 
 
 @dataclass
@@ -74,4 +74,4 @@ class MakeHotelAdmin:
             raise errors.UserNotFound()
 
         user = user.make_hotel_admin()
-        return await self.user_repository.update_user(user)
+        return await self.user_repository.save(user)

@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from sqlalchemy import sql
+from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..core import values
@@ -39,9 +40,30 @@ class SAUserRepository(UserRepository):
             is_hotel_admin=user.is_hotel_admin,
         )
 
-    async def create_user(self, user: User):
+    async def save(self, user: User) -> None:
         model = self.to_model(user)
-        self.session.add(model)
+        insert_stmt = insert(UserModel).values(
+            oid=model.oid,
+            first_name=model.first_name,
+            last_name=model.last_name,
+            phone_number=model.phone_number,
+            created_at=model.created_at,
+            password_hash=model.password_hash,
+            is_superuser=model.is_superuser,
+            is_hotel_admin=model.is_hotel_admin,
+        )
+        upsert_stmt = insert_stmt.on_conflict_do_update(
+            index_elements=[UserModel.oid],
+            set_={
+                "first_name": insert_stmt.excluded.first_name,
+                "last_name": insert_stmt.excluded.last_name,
+                "phone_number": insert_stmt.excluded.phone_number,
+                "password_hash": insert_stmt.excluded.password_hash,
+                "is_superuser": insert_stmt.excluded.is_superuser,
+                "is_hotel_admin": insert_stmt.excluded.is_hotel_admin,
+            },
+        )
+        await self.session.execute(upsert_stmt)
 
     async def get_user_by_oid(self, oid: str) -> User | None:
         stmt = sql.select(UserModel).where(UserModel.oid == oid)
@@ -60,19 +82,3 @@ class SAUserRepository(UserRepository):
             return None
 
         return self.to_entity(user_db)
-
-    async def update_user(self, user: User):
-        stmt = (
-            sql.update(UserModel)
-            .where(UserModel.oid == user.oid)
-            .values(
-                first_name=user.first_name.value,
-                last_name=user.last_name.value,
-                phone_number=user.phone.value,
-                created_at=user.created_at.replace(tzinfo=None),
-                password_hash=user.password_hash,
-                is_superuser=user.is_superuser,
-                is_hotel_admin=user.is_hotel_admin,
-            )
-        )
-        await self.session.execute(stmt)
