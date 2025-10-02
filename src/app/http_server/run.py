@@ -1,39 +1,20 @@
 from dishka.integrations.fastapi import setup_dishka
 from fastapi import FastAPI
-from fastapi.openapi.utils import get_openapi
 import uvicorn
 
 from app import models_registry  # noqa: F401
 from app.http_server.container import container
-from app.http_server.handlers import exceptions_handlers
-from app.http_server.router import router
-
-
-def get_custom_openapi(app: FastAPI):
-    schema = get_openapi(
-        title="Hotel booking API example",
-        version="1.0.0",
-        routes=app.routes,
-    )
-    schema.setdefault("components", {}).setdefault("securitySchemes", {})["HTTPBearer"] = {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT",
-    }
-
-    return schema
+from app.http_server.controllers import setup_controllers
+from app.http_server.docs import setup_docs
+from app.http_server.errors_handlers import setup_exceptions_handlers
 
 
 def create_app() -> FastAPI:
-    app = FastAPI(
-        root_path="/api",
-        exception_handlers=exceptions_handlers,
-    )
-
-    app.include_router(router)
+    app = FastAPI(root_path="/api")
+    setup_controllers(app)
+    setup_exceptions_handlers(app)
+    setup_docs(app)
     setup_dishka(container=container, app=app)
-
-    app.openapi_schema = get_custom_openapi(app)
     return app
 
 
