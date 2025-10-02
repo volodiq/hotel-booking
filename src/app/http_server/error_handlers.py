@@ -4,7 +4,7 @@ from typing import NoReturn
 
 from fastapi import FastAPI, HTTPException, Request
 
-from system.security.errors import SecurityException
+from system.security.tokens.errors import SecurityException
 from system.seedwork.errors import DomainError
 
 

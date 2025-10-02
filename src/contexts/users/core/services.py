@@ -3,7 +3,7 @@ from dataclasses import dataclass
 import secrets
 
 from shared.core.values import Password
-from system.security.dtos import Principal
+from system.security.tokens.dtos import Principal
 
 from . import errors, values
 from .entities import User

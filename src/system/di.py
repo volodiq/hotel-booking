@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from .db_session import get_session_pool
 from .env import Env, get_env
-from .security.services import PyJWTTokenService, TokenService
+from .security.tokens.services import PyJWTTokenService, TokenService
 
 
 def get_token_service(env: Env) -> TokenService:
