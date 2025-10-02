@@ -13,8 +13,8 @@ from .models import UserModel
 class SAUserRepository(UserRepository):
     session: AsyncSession
 
-    @classmethod
-    def to_entity(cls, model: UserModel) -> User:
+    @staticmethod
+    def to_entity(model: UserModel) -> User:
         return User(
             oid=model.oid,
             first_name=values.FirstName(model.first_name),
@@ -26,8 +26,9 @@ class SAUserRepository(UserRepository):
             is_hotel_admin=model.is_hotel_admin,
         )
 
-    async def create_user(self, user: User):
-        model = UserModel(
+    @staticmethod
+    def to_model(user: User) -> UserModel:
+        return UserModel(
             oid=user.oid,
             first_name=user.first_name.value,
             last_name=user.last_name.value,
@@ -37,6 +38,9 @@ class SAUserRepository(UserRepository):
             is_superuser=user.is_superuser,
             is_hotel_admin=user.is_hotel_admin,
         )
+
+    async def create_user(self, user: User):
+        model = self.to_model(user)
         self.session.add(model)
 
     async def get_user_by_oid(self, oid: str) -> User | None:
