@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-from shared.core.values import Password
 from system.security.passwords.services import PasswordService
 from system.security.tokens.dtos import Principal
 
@@ -26,7 +25,7 @@ class CreateUser:
         if exists_user:
             raise errors.UserAlreadyExists()
 
-        raw_password = Password(password)
+        raw_password = values.Password(password)
         password_hash = self.password_service.calculate_password_hash(raw_password.value)
 
         user = entities.User(
