@@ -1,3 +1,3 @@
 #!/bin/sh
 
-PYTHONPATH=./src uv run python -m src.app.cli "$@"
+PYTHONPATH=./src uv run python src/app/cli/run.py "$@"
