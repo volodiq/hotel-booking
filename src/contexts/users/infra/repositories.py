@@ -1,6 +1,7 @@
-from sqlalchemy import sql
+from dataclasses import dataclass
 
-from shared.infra.repositories import SARepository
+from sqlalchemy import sql
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..core import values
 from ..core.entities import User
@@ -8,8 +9,9 @@ from ..core.repositories import UserRepository
 from .models import UserModel
 
 
-class SAUserRepository(UserRepository, SARepository[UserModel]):
-    model = UserModel
+@dataclass
+class SAUserRepository(UserRepository):
+    session: AsyncSession
 
     @classmethod
     def to_entity(cls, model: UserModel) -> User:
@@ -35,10 +37,12 @@ class SAUserRepository(UserRepository, SARepository[UserModel]):
             is_superuser=user.is_superuser,
             is_hotel_admin=user.is_hotel_admin,
         )
-        self.create(model)
+        self.session.add(model)
 
     async def get_user_by_oid(self, oid: str) -> User | None:
-        model = await self.get_by_oid(oid)
+        stmt = sql.select(UserModel).where(UserModel.oid == oid)
+        res = await self.session.scalars(stmt)
+        model = res.one_or_none()
         if not model:
             return None
 
