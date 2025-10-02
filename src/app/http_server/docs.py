@@ -3,6 +3,11 @@ from fastapi.openapi.utils import get_openapi
 
 
 def get_custom_openapi(app: FastAPI) -> dict:
+    """
+    Возвращает схему OpenAPI с принудительно установленной плашкой
+    аутентификации (обход использования инъекции security через FastAPI DI)
+    """
+
     schema = get_openapi(
         title="Hotel booking API example",
         version="1.0.0",
