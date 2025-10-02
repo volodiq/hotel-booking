@@ -1,24 +1,18 @@
-from abc import ABC, abstractmethod
 from dataclasses import dataclass
-import secrets
 
 from shared.core.values import Password
-from system.security.dtos import Principal
+from system.security.passwords.services import PasswordService
+from system.security.tokens.dtos import Principal
 
 from . import errors, values
 from .entities import User
 from .repositories import UserRepository
 
 
-class PasswordHashService(ABC):
-    @abstractmethod
-    def calculate_password_hash(self, raw_password: str) -> str: ...
-
-
 @dataclass
 class CreateUserService:
     repository: UserRepository
-    password_hash_service: PasswordHashService
+    password_service: PasswordService
 
     async def __call__(
         self,
@@ -34,7 +28,7 @@ class CreateUserService:
             raise errors.UserAlreadyExists()
 
         raw_password = Password(password)
-        password_hash = self.password_hash_service.calculate_password_hash(raw_password.value)
+        password_hash = self.password_service.calculate_password_hash(raw_password.value)
 
         user = User(
             first_name=values.FirstName(first_name),
@@ -51,7 +45,7 @@ class CreateUserService:
 @dataclass
 class GetUserByPhoneAndPasswordService:
     user_repository: UserRepository
-    password_hash_service: PasswordHashService
+    password_service: PasswordService
 
     async def __call__(self, raw_phone: str, raw_password: str) -> User | None:
         phone = values.PhoneNumber(raw_phone)
@@ -59,8 +53,10 @@ class GetUserByPhoneAndPasswordService:
         if user is None:
             return None
 
-        password_hash = self.password_hash_service.calculate_password_hash(raw_password)
-        is_valid = secrets.compare_digest(user.password_hash, password_hash)
+        is_valid = self.password_service.check_password(
+            raw_password=raw_password,
+            password_hash=user.password_hash,
+        )
         if not is_valid:
             return None
 

@@ -3,7 +3,7 @@ from uuid import UUID
 from dishka.integrations.fastapi import DishkaRoute, FromDishka
 from fastapi import APIRouter, HTTPException, status
 
-from system.security.fastapi import PrincipalDep
+from system.security.tokens.fastapi import PrincipalDep
 
 from ..core import errors
 from ..core.services import CreateUserService, MakeHotelAdminService
