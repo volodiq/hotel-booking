@@ -70,10 +70,9 @@ class GetUserByPhoneAndPasswordService:
 @dataclass
 class MakeHotelAdminService:
     user_repository: UserRepository
-    principal: Principal
 
-    async def __call__(self, user_oid: str):
-        if "superuser" not in self.principal.roles:
+    async def __call__(self, principal: Principal, user_oid: str):
+        if "superuser" not in principal.roles:
             raise errors.MakeHotelAdminForbidden()
 
         user = await self.user_repository.get_user_by_oid(user_oid)

@@ -12,18 +12,14 @@ PROVIDERS: tuple[Provider, ...] = (
 )
 
 
-def make_container(principal_provider: Provider, *providers: Provider) -> AsyncContainer:
+def make_container(*providers: Provider) -> AsyncContainer:
     """
     Создает DI контейнер.
-
-    principal_provider - провайдер для получения Principal
-    (или вызов исключения, если авторизация не поддерживается интерфейсом).
 
     providers - дополнительные провайдеры.
     """
 
     return make_async_container(
-        principal_provider,
         *PROVIDERS,
         *providers,
     )

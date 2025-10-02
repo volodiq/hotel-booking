@@ -1,7 +1,7 @@
 import asyncclick
 from dishka.integrations.click import setup_dishka
 
-from app.cli.container import container
+from app.container import make_container
 from contexts.users.api.cli import create_superuser
 from system.seedwork.errors import DomainError
 
@@ -9,6 +9,7 @@ from system.seedwork.errors import DomainError
 @asyncclick.group()
 @asyncclick.pass_context
 def main(context: asyncclick.Context):
+    container = make_container()
     setup_dishka(container=container, context=context)  # type: ignore
 
 

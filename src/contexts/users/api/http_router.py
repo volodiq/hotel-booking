@@ -3,6 +3,8 @@ from uuid import UUID
 from dishka.integrations.fastapi import DishkaRoute, FromDishka
 from fastapi import APIRouter, HTTPException, status
 
+from system.security.fastapi import PrincipalDep
+
 from ..core import errors
 from ..core.services import CreateUserService, MakeHotelAdminService
 from . import http_schemas
@@ -32,9 +34,10 @@ async def create_user(
     )
 
 
-@router.post("/{user_oid}/make-hotel-admin/", openapi_extra={"security": [{"HTTPBearer": []}]})
+@router.post("/{user_oid}/make-hotel-admin/")
 async def make_hotel_admin(
     user_oid: UUID,
+    principal: PrincipalDep,
     make_hotel_admin_service: FromDishka[MakeHotelAdminService],
 ):
     """
@@ -43,7 +46,7 @@ async def make_hotel_admin(
     """
 
     try:
-        await make_hotel_admin_service(user_oid.hex)
+        await make_hotel_admin_service(principal, user_oid.hex)
     except errors.MakeHotelAdminForbidden as e:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
