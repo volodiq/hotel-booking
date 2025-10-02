@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from .db_session import get_session_pool
 from .env import Env, get_env
-from .security.passwords.services import PasswordService, SHA256PasswordService
+from .security.passwords.services import BcryptPasswordService, PasswordService
 from .security.tokens.services import PyJWTTokenService, TokenService
 
 
@@ -28,4 +28,4 @@ system_provider.provide(get_env, scope=Scope.APP)
 system_provider.provide(get_session_pool, scope=Scope.APP)
 system_provider.provide(get_token_service, scope=Scope.APP)
 system_provider.provide(get_db_session, scope=Scope.REQUEST)
-system_provider.provide(SHA256PasswordService, provides=PasswordService, scope=Scope.APP)
+system_provider.provide(BcryptPasswordService, provides=PasswordService, scope=Scope.APP)
