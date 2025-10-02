@@ -3,12 +3,12 @@ from typing import Self
 
 from system.seedwork.entity import Entity
 
-from . import errors, values
+from . import errors, values, values1
 
 
 @dataclass(eq=False, frozen=True)
 class User(Entity):
-    phone: values.PhoneNumber
+    phone: values1.PhoneNumber
     first_name: values.FirstName
     last_name: values.LastName
     password_hash: str

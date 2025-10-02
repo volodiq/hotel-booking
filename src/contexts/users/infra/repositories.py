@@ -2,7 +2,7 @@ from sqlalchemy import sql
 
 from shared.infra.repositories import SARepository
 
-from ..core import values
+from ..core import values, values1
 from ..core.entities import User
 from ..core.repositories import UserRepository
 from .models import UserModel
@@ -17,7 +17,7 @@ class SAUserRepository(UserRepository, SARepository[UserModel]):
             oid=model.oid,
             first_name=values.FirstName(model.first_name),
             last_name=values.LastName(model.last_name),
-            phone=values.PhoneNumber(model.phone_number),
+            phone=values1.PhoneNumber(model.phone_number),
             created_at=model.created_at,
             password_hash=model.password_hash,
             is_superuser=model.is_superuser,
@@ -44,7 +44,7 @@ class SAUserRepository(UserRepository, SARepository[UserModel]):
 
         return self.to_entity(model)
 
-    async def get_user_by_phone(self, phone: values.PhoneNumber) -> User | None:
+    async def get_user_by_phone(self, phone: values1.PhoneNumber) -> User | None:
         stmt = sql.select(UserModel).where(UserModel.phone_number == phone.value)
         res = await self.session.scalars(stmt)
         user_db = res.one_or_none()

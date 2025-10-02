@@ -7,24 +7,6 @@ class UserAlreadyExists(DomainError):
         return "Пользователь с таким номером телефона уже существует"
 
 
-class PhoneNumberEmpty(DomainError):
-    @property
-    def details(self) -> str:
-        return "Номер телефона пользователя не может быть пустым"
-
-
-class PhoneNumberInvalid(DomainError):
-    @property
-    def details(self) -> str:
-        return "Номер телефона пользователя некорректен"
-
-
-class PhoneNumberUnsupportedRegion(DomainError):
-    @property
-    def details(self) -> str:
-        return "Данный регион не поддерживается"
-
-
 class FirstNameEmpty(DomainError):
     @property
     def details(self) -> str:

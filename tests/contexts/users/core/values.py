@@ -3,7 +3,8 @@ import phonenumbers
 import pytest
 
 from contexts.users.core import errors as exc
-from contexts.users.core.values import FirstName, LastName, PhoneNumber
+from contexts.users.core.values import FirstName, LastName
+from contexts.users.core.values1 import phone_number_value
 
 
 def test_first_name(faker: Faker):
@@ -45,18 +46,18 @@ def generate_valid_phone_number(region: str) -> str:
 
 
 def test_phone_number():
-    phone_number = PhoneNumber(generate_valid_phone_number("RU"))
+    phone_number = phone_number_value.PhoneNumber(generate_valid_phone_number("RU"))
     assert phone_number.value
 
 
 def test_phone_number_invalid(faker: Faker):
-    with pytest.raises(exc.PhoneNumberEmpty):
+    with pytest.raises(phone_number_value.PhoneNumberEmpty):
         phone_number = ""
-        PhoneNumber(phone_number)
-    with pytest.raises(exc.PhoneNumberUnsupportedRegion):
+        phone_number_value.PhoneNumber(phone_number)
+    with pytest.raises(phone_number_value.PhoneNumberUnsupportedRegion):
         phone_number = generate_valid_phone_number("US")
-        PhoneNumber(phone_number)
-    with pytest.raises(exc.PhoneNumberInvalid):
-        PhoneNumber(faker.text())
-    with pytest.raises(exc.PhoneNumberInvalid):
-        PhoneNumber("+719999999999")
+        phone_number_value.PhoneNumber(phone_number)
+    with pytest.raises(phone_number_value.PhoneNumberInvalid):
+        phone_number_value.PhoneNumber(faker.text())
+    with pytest.raises(phone_number_value.PhoneNumberInvalid):
+        phone_number_value.PhoneNumber("+719999999999")
