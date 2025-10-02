@@ -1,4 +1,7 @@
+from string import punctuation
+
 from system.seedwork.errors import DomainError
+from system.seedwork.value_object import ValueObject
 
 
 class PasswordEmpty(DomainError):
@@ -41,3 +44,31 @@ class PasswordNotContainsSpecialSymbol(DomainError):
     @property
     def details(self) -> str:
         return "Пароль должен содержать хотя бы один специальный символ"
+
+
+class Password(ValueObject[str]):
+    """
+    Сырой пароль, проверяет пароль на стойкость.
+    """
+
+    def validate(self):
+        if not self.value:
+            raise PasswordEmpty()
+
+        if len(self.value) > 30:
+            raise PasswordTooLong()
+
+        if len(self.value) < 8:
+            raise PasswordTooShort()
+
+        if not any(char.isdigit() for char in self.value):
+            raise PasswordNotContainsDigit()
+
+        if not any(char.isupper() for char in self.value):
+            raise PasswordNotContainsUppercase()
+
+        if not any(char.islower() for char in self.value):
+            raise PasswordNotContainsLowercase()
+
+        if not any(char in punctuation for char in self.value):
+            raise PasswordNotContainsSpecialSymbol()

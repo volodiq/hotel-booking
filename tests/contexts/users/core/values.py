@@ -2,36 +2,39 @@ from faker import Faker
 import phonenumbers
 import pytest
 
-from contexts.users.core import errors as exc
-from contexts.users.core.values import FirstName, LastName, PhoneNumber
+from contexts.users.core.values import (
+    first_name as first_name_value,
+    last_name as last_name_value,
+    phone_number as phone_number_value,
+)
 
 
 def test_first_name(faker: Faker):
-    first_name = FirstName(faker.first_name())
+    first_name = first_name_value.FirstName(faker.first_name())
     assert first_name.value
 
 
 def test_first_name_invalid():
-    with pytest.raises(exc.FirstNameTooLong):
+    with pytest.raises(first_name_value.FirstNameTooLong):
         first_name = "1" * 51
-        FirstName(first_name)
-    with pytest.raises(exc.FirstNameEmpty):
+        first_name_value.FirstName(first_name)
+    with pytest.raises(first_name_value.FirstNameEmpty):
         first_name = ""
-        FirstName(first_name)
+        first_name_value.FirstName(first_name)
 
 
 def test_last_name(faker: Faker):
-    last_name = LastName(faker.last_name())
+    last_name = last_name_value.LastName(faker.last_name())
     assert last_name.value
 
 
 def test_last_name_invalid():
-    with pytest.raises(exc.LastNameTooLong):
+    with pytest.raises(last_name_value.LastNameTooLong):
         last_name = "1" * 51
-        LastName(last_name)
-    with pytest.raises(exc.LastNameEmpty):
+        last_name_value.LastName(last_name)
+    with pytest.raises(last_name_value.LastNameEmpty):
         last_name = ""
-        LastName(last_name)
+        last_name_value.LastName(last_name)
 
 
 def generate_valid_phone_number(region: str) -> str:
@@ -45,18 +48,18 @@ def generate_valid_phone_number(region: str) -> str:
 
 
 def test_phone_number():
-    phone_number = PhoneNumber(generate_valid_phone_number("RU"))
+    phone_number = phone_number_value.PhoneNumber(generate_valid_phone_number("RU"))
     assert phone_number.value
 
 
 def test_phone_number_invalid(faker: Faker):
-    with pytest.raises(exc.PhoneNumberEmpty):
+    with pytest.raises(phone_number_value.PhoneNumberEmpty):
         phone_number = ""
-        PhoneNumber(phone_number)
-    with pytest.raises(exc.PhoneNumberUnsupportedRegion):
+        phone_number_value.PhoneNumber(phone_number)
+    with pytest.raises(phone_number_value.PhoneNumberUnsupportedRegion):
         phone_number = generate_valid_phone_number("US")
-        PhoneNumber(phone_number)
-    with pytest.raises(exc.PhoneNumberInvalid):
-        PhoneNumber(faker.text())
-    with pytest.raises(exc.PhoneNumberInvalid):
-        PhoneNumber("+719999999999")
+        phone_number_value.PhoneNumber(phone_number)
+    with pytest.raises(phone_number_value.PhoneNumberInvalid):
+        phone_number_value.PhoneNumber(faker.text())
+    with pytest.raises(phone_number_value.PhoneNumberInvalid):
+        phone_number_value.PhoneNumber("+719999999999")

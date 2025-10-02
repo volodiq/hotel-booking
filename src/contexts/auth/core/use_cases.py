@@ -9,7 +9,7 @@ from .gateways import UsersGateway
 
 
 @dataclass
-class AuthenticateUserService:
+class AuthenticateUser:
     users_gateway: UsersGateway
     token_service: TokenService
 
@@ -31,7 +31,7 @@ class AuthenticateUserService:
 
 
 @dataclass
-class RefreshTokenService:
+class RefreshToken:
     token_service: TokenService
 
     async def __call__(self, refresh_token: str) -> str:
