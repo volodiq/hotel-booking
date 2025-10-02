@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from ..core.services import GetUserByPhoneAndPasswordService
+from ..core import use_cases
 
 
 @dataclass
@@ -13,14 +13,14 @@ class VerifyUserPasswordOut:
 
 @dataclass
 class VerifyUserPassword:
-    verify_user_password_service: GetUserByPhoneAndPasswordService
+    use_case: use_cases.GetUserByPhoneAndPassword
 
     async def __call__(
         self,
         raw_phone: str,
         raw_password: str,
     ) -> VerifyUserPasswordOut:
-        user = await self.verify_user_password_service(raw_phone, raw_password)
+        user = await self.use_case(raw_phone, raw_password)
         if user is None:
             return VerifyUserPasswordOut(is_valid=False)
 

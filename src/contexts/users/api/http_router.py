@@ -5,8 +5,7 @@ from fastapi import APIRouter, HTTPException, status
 
 from system.security.tokens.fastapi import PrincipalDep
 
-from ..core import errors
-from ..core.services import CreateUserService, MakeHotelAdminService
+from ..core import errors, use_cases
 from . import http_schemas
 
 
@@ -20,13 +19,13 @@ router = APIRouter(
 @router.post("/")
 async def create_user(
     data: http_schemas.SCreateUser,
-    create_user_service: FromDishka[CreateUserService],
+    use_case: FromDishka[use_cases.CreateUser],
 ):
     """
     Создание пользователя.
     """
 
-    await create_user_service(
+    await use_case(
         first_name=data.first_name,
         last_name=data.last_name,
         phone=data.phone,
@@ -38,7 +37,7 @@ async def create_user(
 async def make_hotel_admin(
     user_oid: UUID,
     principal: PrincipalDep,
-    make_hotel_admin_service: FromDishka[MakeHotelAdminService],
+    use_case: FromDishka[use_cases.MakeHotelAdmin],
 ):
     """
     Сделать пользователя администратором отеля.
@@ -46,7 +45,7 @@ async def make_hotel_admin(
     """
 
     try:
-        await make_hotel_admin_service(principal, user_oid.hex)
+        await use_case(principal, user_oid.hex)
     except errors.MakeHotelAdminForbidden as e:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,

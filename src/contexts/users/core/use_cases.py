@@ -4,13 +4,12 @@ from shared.core.values import Password
 from system.security.passwords.services import PasswordService
 from system.security.tokens.dtos import Principal
 
-from . import errors, values
-from .entities import User
+from . import entities, errors, values
 from .repositories import UserRepository
 
 
 @dataclass
-class CreateUserService:
+class CreateUser:
     repository: UserRepository
     password_service: PasswordService
 
@@ -30,7 +29,7 @@ class CreateUserService:
         raw_password = Password(password)
         password_hash = self.password_service.calculate_password_hash(raw_password.value)
 
-        user = User(
+        user = entities.User(
             first_name=values.FirstName(first_name),
             last_name=values.LastName(last_name),
             phone=values.PhoneNumber(phone),
@@ -43,11 +42,11 @@ class CreateUserService:
 
 
 @dataclass
-class GetUserByPhoneAndPasswordService:
+class GetUserByPhoneAndPassword:
     user_repository: UserRepository
     password_service: PasswordService
 
-    async def __call__(self, raw_phone: str, raw_password: str) -> User | None:
+    async def __call__(self, raw_phone: str, raw_password: str) -> entities.User | None:
         phone = values.PhoneNumber(raw_phone)
         user = await self.user_repository.get_user_by_phone(phone)
         if user is None:
@@ -64,7 +63,7 @@ class GetUserByPhoneAndPasswordService:
 
 
 @dataclass
-class MakeHotelAdminService:
+class MakeHotelAdmin:
     user_repository: UserRepository
 
     async def __call__(self, principal: Principal, user_oid: str):

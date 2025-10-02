@@ -1,7 +1,7 @@
 from dishka.integrations.fastapi import DishkaRoute, FromDishka
 from fastapi import APIRouter
 
-from ..core.services import AuthenticateUserService, RefreshTokenService
+from ..core import use_cases
 from . import http_schemas
 
 
@@ -15,13 +15,13 @@ router = APIRouter(
 @router.post("/login/", response_model=http_schemas.SLoginOut)
 async def login(
     data: http_schemas.SLoginIn,
-    authenticate_user_service: FromDishka[AuthenticateUserService],
+    use_case: FromDishka[use_cases.AuthenticateUser],
 ):
     """
     Получение токенов для аутентификации.
     """
 
-    return await authenticate_user_service(
+    return await use_case(
         phone=data.phone,
         password=data.password,
     )
@@ -30,11 +30,11 @@ async def login(
 @router.post("/refresh/", response_model=http_schemas.SRefreshTokenOut)
 async def refresh(
     data: http_schemas.SRefreshTokenIn,
-    refresh_token_service: FromDishka[RefreshTokenService],
+    use_case: FromDishka[use_cases.RefreshToken],
 ):
     """
     Обновление токена доступа.
     """
 
-    access_token = await refresh_token_service(data.refresh_token)
+    access_token = await use_case(data.refresh_token)
     return http_schemas.SRefreshTokenOut(access_token=access_token)
