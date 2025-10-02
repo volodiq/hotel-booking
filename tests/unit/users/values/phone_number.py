@@ -2,39 +2,7 @@ from faker import Faker
 import phonenumbers
 import pytest
 
-from contexts.users.core.values import (
-    first_name as first_name_value,
-    last_name as last_name_value,
-    phone_number as phone_number_value,
-)
-
-
-def test_first_name(faker: Faker):
-    first_name = first_name_value.FirstName(faker.first_name())
-    assert first_name.value
-
-
-def test_first_name_invalid():
-    with pytest.raises(first_name_value.FirstNameTooLong):
-        first_name = "1" * 51
-        first_name_value.FirstName(first_name)
-    with pytest.raises(first_name_value.FirstNameEmpty):
-        first_name = ""
-        first_name_value.FirstName(first_name)
-
-
-def test_last_name(faker: Faker):
-    last_name = last_name_value.LastName(faker.last_name())
-    assert last_name.value
-
-
-def test_last_name_invalid():
-    with pytest.raises(last_name_value.LastNameTooLong):
-        last_name = "1" * 51
-        last_name_value.LastName(last_name)
-    with pytest.raises(last_name_value.LastNameEmpty):
-        last_name = ""
-        last_name_value.LastName(last_name)
+from contexts.users.core.values import phone_number as phone_number_value
 
 
 def generate_valid_phone_number(region: str) -> str:
