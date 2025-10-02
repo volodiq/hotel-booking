@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-import hashlib
-import secrets
+
+import bcrypt
 
 
 class PasswordService(ABC):
@@ -11,12 +11,9 @@ class PasswordService(ABC):
     def check_password(self, raw_password: str, password_hash: str) -> bool: ...
 
 
-class SHA256PasswordService(PasswordService):
+class BcryptPasswordService(PasswordService):
     def calculate_password_hash(self, raw_password: str) -> str:
-        return hashlib.sha256(raw_password.encode()).hexdigest()
+        return bcrypt.hashpw(raw_password.encode(), bcrypt.gensalt()).decode()
 
     def check_password(self, raw_password: str, password_hash: str) -> bool:
-        return secrets.compare_digest(
-            password_hash,
-            self.calculate_password_hash(raw_password),
-        )
+        return bcrypt.checkpw(raw_password.encode(), password_hash.encode())
