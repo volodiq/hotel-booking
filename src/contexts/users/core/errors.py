@@ -7,30 +7,6 @@ class UserAlreadyExists(DomainError):
         return "Пользователь с таким номером телефона уже существует"
 
 
-class FirstNameEmpty(DomainError):
-    @property
-    def details(self) -> str:
-        return "Имя пользователя не может быть пустым"
-
-
-class FirstNameTooLong(DomainError):
-    @property
-    def details(self) -> str:
-        return "Имя пользователя слишком длинное"
-
-
-class LastNameEmpty(DomainError):
-    @property
-    def details(self) -> str:
-        return "Фамилия пользователя не может быть пустой"
-
-
-class LastNameTooLong(DomainError):
-    @property
-    def details(self) -> str:
-        return "Фамилия пользователя слишком длинная"
-
-
 class UserNotFound(DomainError):
     @property
     def details(self) -> str:

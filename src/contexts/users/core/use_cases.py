@@ -4,7 +4,7 @@ from shared.core.values import Password
 from system.security.passwords.services import PasswordService
 from system.security.tokens.dtos import Principal
 
-from . import entities, errors, values, values1
+from . import entities, errors, values
 from .repositories import UserRepository
 
 
@@ -22,7 +22,7 @@ class CreateUser:
         is_superuser: bool = False,
         is_hotel_admin: bool = False,
     ):
-        exists_user = await self.repository.get_user_by_phone(values1.PhoneNumber(phone))
+        exists_user = await self.repository.get_user_by_phone(values.PhoneNumber(phone))
         if exists_user:
             raise errors.UserAlreadyExists()
 
@@ -32,7 +32,7 @@ class CreateUser:
         user = entities.User(
             first_name=values.FirstName(first_name),
             last_name=values.LastName(last_name),
-            phone=values1.PhoneNumber(phone),
+            phone=values.PhoneNumber(phone),
             password_hash=password_hash,
             is_superuser=is_superuser,
             is_hotel_admin=is_hotel_admin,
@@ -47,7 +47,7 @@ class GetUserByPhoneAndPassword:
     password_service: PasswordService
 
     async def __call__(self, raw_phone: str, raw_password: str) -> entities.User | None:
-        phone = values1.PhoneNumber(raw_phone)
+        phone = values.PhoneNumber(raw_phone)
         user = await self.user_repository.get_user_by_phone(phone)
         if user is None:
             return None
