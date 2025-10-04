@@ -1,7 +1,7 @@
 import asyncclick
 from dishka.integrations.click import FromDishka
 
-from utils.asyncclick_dishka import cli_inject
+from shared.api.click_di import cli_inject
 
 from ..app import use_cases
 
