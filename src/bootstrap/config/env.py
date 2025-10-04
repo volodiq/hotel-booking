@@ -1,11 +1,6 @@
 from dataclasses import dataclass
-from datetime import timedelta
-from typing import AsyncIterable
 
 import environs
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-
-from shared.infra.services import PyJWTTokenService, TokenService
 
 
 @dataclass(frozen=True, slots=True)
@@ -27,11 +22,6 @@ class Env:
             f"{self.DB_USER}:{self.DB_PASSWORD}@"
             f"{self.DBMS_HOST}:{self.DBMS_PORT}/{self.DB_NAME}"
         )
-
-
-def get_session_pool(env: Env) -> async_sessionmaker:
-    engine = create_async_engine(env.db_dsn)
-    return async_sessionmaker(engine, expire_on_commit=False)
 
 
 def get_env() -> Env:
@@ -56,16 +46,3 @@ def get_env() -> Env:
         DBMS_HOST=dbms_host,
         DBMS_PORT=dbms_port,
     )
-
-
-def get_token_service(env: Env) -> TokenService:
-    return PyJWTTokenService(
-        secret_key=env.SECRET_KEY,
-        access_token_ttl=timedelta(hours=1),
-        refresh_token_ttl=timedelta(weeks=1),
-    )
-
-
-async def get_sa_session(session_pool: async_sessionmaker) -> AsyncIterable[AsyncSession]:
-    async with session_pool.begin() as session:
-        yield session

@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from dishka import Provider, Scope
 
 from contexts.auth.app import use_cases as auth_use_cases
@@ -7,22 +9,36 @@ from contexts.users.app import use_cases as users_use_cases
 from contexts.users.infra import repositories as users_repositories
 from shared.infra import services as common_services
 
-from . import providers
+from . import config
 
 
 provider = Provider()
 
+
+# SQLAlchemy
+provider.provide(config.sa.get_sa_session_pool, scope=Scope.APP)
+provider.provide(config.sa.get_sa_session, scope=Scope.REQUEST)
+
+# Env
+provider.provide(config.env.get_env, scope=Scope.APP)
+
 # Common
-provider.provide(providers.get_env, scope=Scope.APP)
-provider.provide(providers.get_session_pool, scope=Scope.APP)
-provider.provide(providers.get_token_service, scope=Scope.APP)
-provider.provide(providers.get_sa_session, scope=Scope.REQUEST)
 provider.provide(
     common_services.BcryptPasswordService,
     provides=common_services.PasswordService,
     scope=Scope.APP,
 )
 
+
+def get_token_service(env: config.env.Env) -> common_services.TokenService:
+    return common_services.PyJWTTokenService(
+        secret_key=env.SECRET_KEY,
+        access_token_ttl=timedelta(hours=1),
+        refresh_token_ttl=timedelta(weeks=1),
+    )
+
+
+provider.provide(get_token_service, scope=Scope.APP)
 
 # Auth
 provider.provide(auth_use_cases.AuthenticateUser, scope=Scope.REQUEST)
