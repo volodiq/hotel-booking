@@ -3,9 +3,8 @@ from dataclasses import dataclass
 from system.security.tokens.dtos import Principal, TokenType
 from system.security.tokens.services import TokenService
 
-from . import errors
-from .dtos import TokenPair
-from .gateways import UsersGateway
+from . import dtos, errors
+from .interfaces import UsersGateway
 
 
 @dataclass
@@ -13,7 +12,7 @@ class AuthenticateUser:
     users_gateway: UsersGateway
     token_service: TokenService
 
-    async def __call__(self, phone: str, password: str) -> TokenPair:
+    async def __call__(self, phone: str, password: str) -> dtos.TokenPair:
         verification_result = await self.users_gateway.verify_user_password(phone, password)
         if verification_result.user_oid is None or not verification_result.is_valid:
             raise errors.InvalidCredentials()
@@ -27,7 +26,7 @@ class AuthenticateUser:
         principal = Principal(sub=verification_result.user_oid, roles=roles)
         access = self.token_service.encode(principal, TokenType.ACCESS)
         refresh = self.token_service.encode(principal, TokenType.REFRESH)
-        return TokenPair(access_token=access, refresh_token=refresh)
+        return dtos.TokenPair(access_token=access, refresh_token=refresh)
 
 
 @dataclass

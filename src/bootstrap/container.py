@@ -1,6 +1,6 @@
 from dishka import Provider, Scope
 
-from contexts.auth.core import use_cases as auth_use_cases
+from contexts.auth.app import use_cases as auth_use_cases
 from contexts.auth.infra import gateways as auth_gateways
 from contexts.users.api import internal as users_internal
 from contexts.users.core import use_cases as users_use_cases
