@@ -1,0 +1,19 @@
+from shared.core.errors import DomainError
+
+
+class UserAlreadyExists(DomainError):
+    @property
+    def details(self) -> str:
+        return "Пользователь с таким номером телефона уже существует"
+
+
+class UserNotFound(DomainError):
+    @property
+    def details(self) -> str:
+        return "Пользователь не найден"
+
+
+class MakeHotelAdminForbidden(DomainError):
+    @property
+    def details(self) -> str:
+        return "Не достаточно прав для назначения администраторов отелей"

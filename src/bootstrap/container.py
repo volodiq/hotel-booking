@@ -3,7 +3,7 @@ from dishka import Provider, Scope
 from contexts.auth.app import use_cases as auth_use_cases
 from contexts.auth.infra import gateways as auth_gateways
 from contexts.users.api import internal as users_internal
-from contexts.users.core import use_cases as users_use_cases
+from contexts.users.app import use_cases as users_use_cases
 from contexts.users.infra import repositories as users_repositories
 from system.security.passwords.services import BcryptPasswordService, PasswordService
 

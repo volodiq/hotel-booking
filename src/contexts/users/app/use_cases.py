@@ -3,8 +3,9 @@ from dataclasses import dataclass
 from system.security.passwords.services import PasswordService
 from system.security.tokens.dtos import Principal
 
-from . import entities, errors, values
-from .repositories import UserRepository
+from ..core import entities, values
+from . import errors
+from .interfaces import UserRepository
 
 
 @dataclass

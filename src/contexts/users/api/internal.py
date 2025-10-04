@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from ..core import use_cases
+from ..app import use_cases
 
 
 @dataclass

@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException, status
 
 from system.security.tokens.fastapi import PrincipalDep
 
-from ..core import errors, use_cases
+from ..app import errors, use_cases
 from . import http_schemas
 
 
