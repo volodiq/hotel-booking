@@ -5,9 +5,9 @@ from alembic import context
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
-
-from app import models_registry
 from system.env import get_env
+
+from bootstrap import models_registry
 
 
 config = context.config

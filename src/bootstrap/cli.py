@@ -2,7 +2,7 @@ import asyncclick
 from dishka import make_async_container
 from dishka.integrations.click import setup_dishka
 
-from app.container import provider
+from bootstrap.container import provider
 from contexts.users.api.cli import create_superuser
 from shared.core.errors import DomainError
 

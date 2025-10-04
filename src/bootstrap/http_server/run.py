@@ -3,10 +3,10 @@ from dishka.integrations.fastapi import setup_dishka
 from fastapi import FastAPI
 import uvicorn
 
-from app import models_registry  # noqa: F401
-from app.container import provider
-from app.http_server.controllers import setup_controllers
-from app.http_server.error_handlers import setup_exceptions_handlers
+from bootstrap import models_registry  # noqa: F401
+from bootstrap.container import provider
+from bootstrap.http_server.controllers import setup_controllers
+from bootstrap.http_server.error_handlers import setup_exceptions_handlers
 
 
 def create_app() -> FastAPI:
