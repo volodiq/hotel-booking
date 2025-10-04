@@ -5,7 +5,7 @@ from contexts.auth.infra import gateways as auth_gateways
 from contexts.users.api import internal as users_internal
 from contexts.users.app import use_cases as users_use_cases
 from contexts.users.infra import repositories as users_repositories
-from system.security.passwords.services import BcryptPasswordService, PasswordService
+from shared.infra import services as common_services
 
 from . import providers
 
@@ -17,7 +17,11 @@ provider.provide(providers.get_env, scope=Scope.APP)
 provider.provide(providers.get_session_pool, scope=Scope.APP)
 provider.provide(providers.get_token_service, scope=Scope.APP)
 provider.provide(providers.get_sa_session, scope=Scope.REQUEST)
-provider.provide(BcryptPasswordService, provides=PasswordService, scope=Scope.APP)
+provider.provide(
+    common_services.BcryptPasswordService,
+    provides=common_services.PasswordService,
+    scope=Scope.APP,
+)
 
 
 # Auth

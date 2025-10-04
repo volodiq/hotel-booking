@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from system.security.passwords.services import PasswordService
+from shared.app.interfaces import PasswordService
 from system.security.tokens.dtos import Principal
 
 from ..core import entities, values
