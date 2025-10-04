@@ -1,7 +1,7 @@
 import phonenumbers
 
-from system.seedwork.errors import DomainError
-from system.seedwork.value_object import ValueObject
+from shared.core.errors import DomainError
+from shared.core.value_object import ValueObject
 
 
 class PhoneNumberEmpty(DomainError):

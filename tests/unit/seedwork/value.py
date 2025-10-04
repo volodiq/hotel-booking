@@ -1,8 +1,8 @@
 from faker import Faker
 import pytest
 
-from system.seedwork.errors import DomainError
-from system.seedwork.value_object import ValueObject
+from shared.core.errors import DomainError
+from shared.core.value_object import ValueObject
 
 
 class SomeValueTooLong(DomainError):

@@ -1,4 +1,4 @@
-from system.seedwork.errors import DomainError
+from shared.core.errors import DomainError
 
 
 class InvalidCredentials(DomainError):

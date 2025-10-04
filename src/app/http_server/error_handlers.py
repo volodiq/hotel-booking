@@ -4,8 +4,8 @@ from typing import NoReturn
 
 from fastapi import FastAPI, HTTPException, Request
 
+from shared.core.errors import DomainError
 from system.security.tokens.errors import SecurityException
-from system.seedwork.errors import DomainError
 
 
 def setup_exceptions_handlers(app: FastAPI) -> None:
