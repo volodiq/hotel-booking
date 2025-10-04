@@ -5,7 +5,7 @@ from typing import AsyncIterable
 import environs
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
-from system.security.tokens.services import PyJWTTokenService, TokenService
+from shared.infra.services import PyJWTTokenService, TokenService
 
 
 @dataclass(frozen=True, slots=True)

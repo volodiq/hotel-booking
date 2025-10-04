@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from system.security.tokens.dtos import Principal, TokenType
-from system.security.tokens.services import TokenService
+from shared.app.dtos import Principal, TokenType
+from shared.app.interfaces import TokenService
 
 from . import dtos, errors
 from .interfaces import UsersGateway

@@ -5,8 +5,8 @@ from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi.security.utils import get_authorization_scheme_param
 
-from .dtos import Principal, TokenType
-from .services import TokenService
+from ..app.dtos import Principal, TokenType
+from ..app.interfaces import TokenService
 
 
 class LocalizedHTTPBearer(HTTPBearer):

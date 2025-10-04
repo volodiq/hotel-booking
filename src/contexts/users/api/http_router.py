@@ -3,7 +3,7 @@ from uuid import UUID
 from dishka.integrations.fastapi import DishkaRoute, FromDishka
 from fastapi import APIRouter, HTTPException, status
 
-from system.security.tokens.fastapi import PrincipalDep
+from shared.api.fastapi_di import PrincipalDep
 
 from ..app import errors, use_cases
 from . import http_schemas

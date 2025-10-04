@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
+from shared.app.dtos import Principal
 from shared.app.interfaces import PasswordService
-from system.security.tokens.dtos import Principal
 
 from ..core import entities, values
 from . import errors
