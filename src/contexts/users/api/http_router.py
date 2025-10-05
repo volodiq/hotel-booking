@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException, status
 from shared.api.fastapi_di import PrincipalDep
 
 from ..app import errors, use_cases
-from . import http_schemas
+from . import schemas
 
 
 router = APIRouter(
@@ -18,7 +18,7 @@ router = APIRouter(
 
 @router.post("/")
 async def create_user(
-    data: http_schemas.SCreateUser,
+    data: schemas.SCreateUser,
     use_case: FromDishka[use_cases.CreateUser],
 ):
     """
