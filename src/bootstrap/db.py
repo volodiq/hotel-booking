@@ -1,19 +1,30 @@
-from typing import AsyncIterable
+from dataclasses import dataclass
+from typing import AsyncIterable, Self
 
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import (
+    AsyncEngine,
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
 
 from .env import Env
 
 
-def _get_session_pool(db_dsn: str) -> async_sessionmaker:
-    engine = create_async_engine(db_dsn)
-    return async_sessionmaker(engine, expire_on_commit=False)
+@dataclass
+class SessionProvider:
+    db_engine: AsyncEngine
+    session_pool: async_sessionmaker
 
+    async def get_session(self: Self) -> AsyncIterable[AsyncSession]:
+        async with self.session_pool.begin() as session:
+            yield session
 
-async def get_sa_session_pool(env: Env) -> async_sessionmaker:
-    return _get_session_pool(env.db_dsn)
-
-
-async def get_sa_session(session_pool: async_sessionmaker) -> AsyncIterable[AsyncSession]:
-    async with session_pool.begin() as session:
-        yield session
+    @classmethod
+    def from_env(cls, env: Env) -> Self:
+        db_engine = create_async_engine(env.db_dsn)
+        session_pool = async_sessionmaker(db_engine, expire_on_commit=False)
+        return cls(
+            db_engine=db_engine,
+            session_pool=session_pool,
+        )

@@ -16,8 +16,8 @@ provider = Provider()
 
 
 # SQLAlchemy
-provider.provide(db.get_sa_session_pool, scope=Scope.APP)
-provider.provide(db.get_sa_session, scope=Scope.REQUEST)
+provider.provide(db.SessionProvider.from_env, scope=Scope.APP)
+provider.provide(db.SessionProvider.get_session, scope=Scope.REQUEST)
 
 # Env
 provider.provide(env.get_env, scope=Scope.APP)
