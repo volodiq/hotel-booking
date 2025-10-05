@@ -1,7 +1,20 @@
 services:
+  app-http:
+    build: .
+    restart: unless-stopped
+    profiles: [ app ]
+    command: sh /app/start_http_server.sh
+    env_file:
+      - .env
+    environment:
+      APP_RUN_AS_SERVICE: true
+    ports:
+      - ${API_MAP_PORT}:8000
+
   postgres:
     image: postgres:17.6
     restart: unless-stopped
+    profiles: [ storage ]
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
@@ -10,6 +23,6 @@ services:
       - 5432:5432
     volumes:
       - postgres-data:/var/lib/postgresql/data/
-    
+
 volumes:
   postgres-data: {}
