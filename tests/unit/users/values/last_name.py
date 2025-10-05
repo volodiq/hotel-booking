@@ -1,7 +1,7 @@
 from faker import Faker
 import pytest
 
-from contexts.users.core.values import last_name as last_name_value
+from contexts.users.app.values import last_name as last_name_value
 
 
 def test_last_name(faker: Faker):

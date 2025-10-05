@@ -1,0 +1,25 @@
+import asyncclick
+from dishka import make_async_container
+from dishka.integrations.click import setup_dishka
+
+from bootstrap import models_registry  # noqa: F401
+from bootstrap.container import provider
+from contexts.users.api.cli import create_superuser
+from shared.app.errors import ApplicationError
+
+
+@asyncclick.group()
+@asyncclick.pass_context
+def main(context: asyncclick.Context):
+    container = make_async_container(provider)
+    setup_dishka(container=container, context=context)  # type: ignore
+
+
+main.add_command(cmd=create_superuser, name="createsuperuser")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except ApplicationError as e:
+        print(f"Ошибка: {e.details}")

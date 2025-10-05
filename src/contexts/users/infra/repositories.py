@@ -4,9 +4,8 @@ from sqlalchemy import sql
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..core import values
-from ..core.entities import User
-from ..core.repositories import UserRepository
+from ..app import entities, values
+from ..app.interfaces import UserRepository
 from .models import UserModel
 
 
@@ -15,8 +14,8 @@ class SAUserRepository(UserRepository):
     session: AsyncSession
 
     @staticmethod
-    def to_entity(model: UserModel) -> User:
-        return User(
+    def to_entity(model: UserModel) -> entities.User:
+        return entities.User(
             oid=model.oid,
             first_name=values.FirstName(model.first_name),
             last_name=values.LastName(model.last_name),
@@ -28,7 +27,7 @@ class SAUserRepository(UserRepository):
         )
 
     @staticmethod
-    def to_model(user: User) -> UserModel:
+    def to_model(user: entities.User) -> UserModel:
         return UserModel(
             oid=user.oid,
             first_name=user.first_name.value,
@@ -40,7 +39,7 @@ class SAUserRepository(UserRepository):
             is_hotel_admin=user.is_hotel_admin,
         )
 
-    async def save(self, user: User) -> None:
+    async def save(self, user: entities.User) -> None:
         model = self.to_model(user)
         insert_stmt = insert(UserModel).values(
             oid=model.oid,
@@ -65,7 +64,7 @@ class SAUserRepository(UserRepository):
         )
         await self.session.execute(upsert_stmt)
 
-    async def get_user_by_oid(self, oid: str) -> User | None:
+    async def get_user_by_oid(self, oid: str) -> entities.User | None:
         stmt = sql.select(UserModel).where(UserModel.oid == oid)
         res = await self.session.scalars(stmt)
         model = res.one_or_none()
@@ -74,7 +73,7 @@ class SAUserRepository(UserRepository):
 
         return self.to_entity(model)
 
-    async def get_user_by_phone(self, phone: values.PhoneNumber) -> User | None:
+    async def get_user_by_phone(self, phone: values.PhoneNumber) -> entities.User | None:
         stmt = sql.select(UserModel).where(UserModel.phone_number == phone.value)
         res = await self.session.scalars(stmt)
         user_db = res.one_or_none()

@@ -1,9 +1,9 @@
 import asyncclick
 from dishka.integrations.click import FromDishka
 
-from utils.asyncclick_dishka import cli_inject
+from shared.api.click_di import cli_inject
 
-from ..core.use_cases import CreateUser
+from ..app import use_cases
 
 
 @asyncclick.command()
@@ -17,7 +17,7 @@ async def create_superuser(
     name: str,
     last_name: str,
     password: str,
-    create_user_service: FromDishka[CreateUser],
+    create_user_service: FromDishka[use_cases.CreateUser],
 ):
     await create_user_service(
         first_name=name,

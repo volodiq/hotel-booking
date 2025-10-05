@@ -2,8 +2,8 @@ from dataclasses import dataclass
 
 from contexts.users.api.internal import VerifyUserPassword
 
-from ..core.dtos import VerifyUserPasswordOut
-from ..core.gateways import UsersGateway
+from ..app.dtos import VerifyUserPasswordOut
+from ..app.interfaces import UsersGateway
 
 
 @dataclass

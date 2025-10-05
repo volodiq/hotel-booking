@@ -1,14 +1,7 @@
 from dataclasses import dataclass
 
-from ..core import use_cases
-
-
-@dataclass
-class VerifyUserPasswordOut:
-    is_valid: bool
-    user_oid: str | None = None
-    is_superuser: bool | None = None
-    is_hotel_admin: bool | None = None
+from ..app import use_cases
+from . import schemas
 
 
 @dataclass
@@ -19,12 +12,12 @@ class VerifyUserPassword:
         self,
         raw_phone: str,
         raw_password: str,
-    ) -> VerifyUserPasswordOut:
+    ) -> schemas.SVerifyUserPasswordOut:
         user = await self.use_case(raw_phone, raw_password)
         if user is None:
-            return VerifyUserPasswordOut(is_valid=False)
+            return schemas.SVerifyUserPasswordOut(is_valid=False)
 
-        return VerifyUserPasswordOut(
+        return schemas.SVerifyUserPasswordOut(
             is_valid=True,
             user_oid=user.oid,
             is_superuser=user.is_superuser,

@@ -2,7 +2,7 @@ from faker import Faker
 import phonenumbers
 import pytest
 
-from contexts.users.core.values import phone_number as phone_number_value
+from contexts.users.app.values import phone_number as phone_number_value
 
 
 def generate_valid_phone_number(region: str) -> str:
