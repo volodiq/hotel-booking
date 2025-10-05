@@ -11,7 +11,7 @@ from bootstrap import models_registry  # noqa: F401
 from bootstrap.container import provider
 from contexts.auth.api.http_router import router as auth_router
 from contexts.users.api.http_router import router as users_router
-from shared.app.errors import DomainError, SecurityException
+from shared.app.errors import ApplicationError, SecurityException
 
 
 def setup_controllers(app: FastAPI) -> None:
@@ -20,14 +20,14 @@ def setup_controllers(app: FastAPI) -> None:
 
 
 def setup_exceptions_handlers(app: FastAPI) -> None:
-    app.add_exception_handler(DomainError, partial(error_handler, HTTPStatus.BAD_REQUEST))
+    app.add_exception_handler(ApplicationError, partial(error_handler, HTTPStatus.BAD_REQUEST))
     app.add_exception_handler(SecurityException, partial(error_handler, HTTPStatus.UNAUTHORIZED))
 
 
 async def error_handler(
     status_code: HTTPStatus,
     request: Request,
-    exc: DomainError | SecurityException,
+    exc: ApplicationError | SecurityException,
 ) -> NoReturn:
     raise HTTPException(
         status_code=status_code,

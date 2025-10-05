@@ -1,46 +1,46 @@
 from string import punctuation
 
-from shared.app.errors import DomainError
+from shared.app.errors import ApplicationError
 from shared.app.value_object import ValueObject
 
 
-class PasswordEmpty(DomainError):
+class PasswordEmpty(ApplicationError):
     @property
     def details(self) -> str:
         return "Пароль не может быть пустой"
 
 
-class PasswordTooLong(DomainError):
+class PasswordTooLong(ApplicationError):
     @property
     def details(self) -> str:
         return "Пароль не может быть длиннее 30 символов"
 
 
-class PasswordTooShort(DomainError):
+class PasswordTooShort(ApplicationError):
     @property
     def details(self) -> str:
         return "Пароль не может быть короче 8 символов"
 
 
-class PasswordNotContainsDigit(DomainError):
+class PasswordNotContainsDigit(ApplicationError):
     @property
     def details(self) -> str:
         return "Пароль должен содержать хотя бы одну цифру"
 
 
-class PasswordNotContainsUppercase(DomainError):
+class PasswordNotContainsUppercase(ApplicationError):
     @property
     def details(self) -> str:
         return "Пароль должен содержать хотя бы одну заглавную букву"
 
 
-class PasswordNotContainsLowercase(DomainError):
+class PasswordNotContainsLowercase(ApplicationError):
     @property
     def details(self) -> str:
         return "Пароль должен содержать хотя бы одну строчную букву"
 
 
-class PasswordNotContainsSpecialSymbol(DomainError):
+class PasswordNotContainsSpecialSymbol(ApplicationError):
     @property
     def details(self) -> str:
         return "Пароль должен содержать хотя бы один специальный символ"

@@ -1,7 +1,7 @@
-from shared.app.errors import DomainError
+from shared.app.errors import ApplicationError
 
 
-class InvalidCredentials(DomainError):
+class InvalidCredentials(ApplicationError):
     @property
     def details(self) -> str:
         return "Неверный номер телефона или пароль"

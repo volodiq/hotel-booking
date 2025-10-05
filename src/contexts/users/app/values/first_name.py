@@ -1,14 +1,14 @@
-from shared.app.errors import DomainError
+from shared.app.errors import ApplicationError
 from shared.app.value_object import ValueObject
 
 
-class FirstNameEmpty(DomainError):
+class FirstNameEmpty(ApplicationError):
     @property
     def details(self) -> str:
         return "Имя пользователя не может быть пустым"
 
 
-class FirstNameTooLong(DomainError):
+class FirstNameTooLong(ApplicationError):
     @property
     def details(self) -> str:
         return "Имя пользователя слишком длинное"

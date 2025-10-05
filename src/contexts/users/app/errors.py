@@ -1,25 +1,25 @@
-from shared.app.errors import DomainError
+from shared.app.errors import ApplicationError
 
 
-class UserAlreadyExists(DomainError):
+class UserAlreadyExists(ApplicationError):
     @property
     def details(self) -> str:
         return "Пользователь с таким номером телефона уже существует"
 
 
-class UserAlreadyHotelAdmin(DomainError):
+class UserAlreadyHotelAdmin(ApplicationError):
     @property
     def details(self) -> str:
         return "Пользователь уже является администратором отеля"
 
 
-class UserNotFound(DomainError):
+class UserNotFound(ApplicationError):
     @property
     def details(self) -> str:
         return "Пользователь не найден"
 
 
-class MakeHotelAdminForbidden(DomainError):
+class MakeHotelAdminForbidden(ApplicationError):
     @property
     def details(self) -> str:
         return "Не достаточно прав для назначения администраторов отелей"

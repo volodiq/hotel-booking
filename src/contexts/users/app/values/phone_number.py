@@ -1,22 +1,22 @@
 import phonenumbers
 
-from shared.app.errors import DomainError
+from shared.app.errors import ApplicationError
 from shared.app.value_object import ValueObject
 
 
-class PhoneNumberEmpty(DomainError):
+class PhoneNumberEmpty(ApplicationError):
     @property
     def details(self) -> str:
         return "Номер телефона пользователя не может быть пустым"
 
 
-class PhoneNumberInvalid(DomainError):
+class PhoneNumberInvalid(ApplicationError):
     @property
     def details(self) -> str:
         return "Номер телефона пользователя некорректен"
 
 
-class PhoneNumberUnsupportedRegion(DomainError):
+class PhoneNumberUnsupportedRegion(ApplicationError):
     @property
     def details(self) -> str:
         return "Данный регион не поддерживается"
