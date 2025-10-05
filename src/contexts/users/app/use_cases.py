@@ -3,8 +3,7 @@ from dataclasses import dataclass
 from shared.app.dtos import Principal
 from shared.app.interfaces import PasswordService
 
-from ..core import entities, values
-from . import errors
+from . import entities, errors, values
 from .interfaces import UserRepository
 
 

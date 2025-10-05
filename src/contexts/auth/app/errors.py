@@ -1,4 +1,4 @@
-from shared.core.errors import DomainError
+from shared.app.errors import DomainError
 
 
 class InvalidCredentials(DomainError):

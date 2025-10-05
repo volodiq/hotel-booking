@@ -1,7 +1,7 @@
 from string import punctuation
 
-from shared.core.errors import DomainError
-from shared.core.value_object import ValueObject
+from shared.app.errors import DomainError
+from shared.app.value_object import ValueObject
 
 
 class PasswordEmpty(DomainError):

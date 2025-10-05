@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from ..core import entities, values
+from . import entities, values
 
 
 class UserRepository(ABC):

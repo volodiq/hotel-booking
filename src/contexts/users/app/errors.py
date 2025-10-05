@@ -1,10 +1,16 @@
-from shared.core.errors import DomainError
+from shared.app.errors import DomainError
 
 
 class UserAlreadyExists(DomainError):
     @property
     def details(self) -> str:
         return "Пользователь с таким номером телефона уже существует"
+
+
+class UserAlreadyHotelAdmin(DomainError):
+    @property
+    def details(self) -> str:
+        return "Пользователь уже является администратором отеля"
 
 
 class UserNotFound(DomainError):
