@@ -9,18 +9,18 @@ from contexts.users.app import use_cases as users_use_cases
 from contexts.users.infra import repositories as users_repositories
 from shared.infra import services as common_services
 
-from . import config
+from . import db, env
 
 
 provider = Provider()
 
 
 # SQLAlchemy
-provider.provide(config.sa.get_sa_session_pool, scope=Scope.APP)
-provider.provide(config.sa.get_sa_session, scope=Scope.REQUEST)
+provider.provide(db.get_sa_session_pool, scope=Scope.APP)
+provider.provide(db.get_sa_session, scope=Scope.REQUEST)
 
 # Env
-provider.provide(config.env.get_env, scope=Scope.APP)
+provider.provide(env.get_env, scope=Scope.APP)
 
 # Common
 provider.provide(
@@ -30,7 +30,7 @@ provider.provide(
 )
 
 
-def get_token_service(env: config.env.Env) -> common_services.TokenService:
+def get_token_service(env: env.Env) -> common_services.TokenService:
     return common_services.PyJWTTokenService(
         secret_key=env.SECRET_KEY,
         access_token_ttl=timedelta(hours=1),

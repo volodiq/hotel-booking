@@ -7,4 +7,4 @@ storage:
     @{{DC}} --profile storage up
 
 cli args:
-    @PYTHONPATH=./src uv run python src/bootstrap/cli.py {{args}}
+    @PYTHONPATH=./src uv run python src/run_cli.py {{args}}
