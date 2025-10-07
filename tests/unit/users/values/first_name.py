@@ -1,18 +1,27 @@
 from faker import Faker
 import pytest
 
-from contexts.users.app.values import first_name as first_name_value
+from contexts.users.app.values.first_name import (
+    FirstName,
+    FirstNameInvalidError,
+    FirstNameInvalidReason,
+)
 
 
 def test_first_name(faker: Faker):
-    first_name = first_name_value.FirstName(faker.first_name())
+    first_name = FirstName(faker.first_name())
     assert first_name.value
 
 
-def test_first_name_invalid():
-    with pytest.raises(first_name_value.FirstNameTooLong):
-        first_name = "1" * 51
-        first_name_value.FirstName(first_name)
-    with pytest.raises(first_name_value.FirstNameEmpty):
-        first_name = ""
-        first_name_value.FirstName(first_name)
+@pytest.mark.parametrize(
+    "first_name, reason",
+    [
+        ("1" * 51, FirstNameInvalidReason.TOO_LONG),
+        ("", FirstNameInvalidReason.EMPTY),
+    ],
+)
+def test_first_name_invalid(first_name, reason):
+    with pytest.raises(FirstNameInvalidError) as e:
+        FirstName(first_name)
+
+    assert e.value.reason == reason
