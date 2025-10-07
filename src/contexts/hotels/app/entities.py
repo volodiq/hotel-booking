@@ -62,5 +62,6 @@ class Room(Entity):
 @dataclass(eq=False, frozen=True)
 class Hotel(Entity):
     name: str
+    hotel_admin_oid: str
     rating: values.HotelRating
     address: str
