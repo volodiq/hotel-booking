@@ -1,8 +1,11 @@
-from faker import Faker
 import phonenumbers
 import pytest
 
-from contexts.users.app.values import phone_number as phone_number_value
+from contexts.users.app.values.phone_number import (
+    PhoneNumber,
+    PhoneNumberInvalidError,
+    PhoneNumberInvalidReason,
+)
 
 
 def generate_valid_phone_number(region: str) -> str:
@@ -16,18 +19,20 @@ def generate_valid_phone_number(region: str) -> str:
 
 
 def test_phone_number():
-    phone_number = phone_number_value.PhoneNumber(generate_valid_phone_number("RU"))
+    phone_number = PhoneNumber(generate_valid_phone_number("RU"))
     assert phone_number.value
 
 
-def test_phone_number_invalid(faker: Faker):
-    with pytest.raises(phone_number_value.PhoneNumberEmpty):
-        phone_number = ""
-        phone_number_value.PhoneNumber(phone_number)
-    with pytest.raises(phone_number_value.PhoneNumberUnsupportedRegion):
-        phone_number = generate_valid_phone_number("US")
-        phone_number_value.PhoneNumber(phone_number)
-    with pytest.raises(phone_number_value.PhoneNumberInvalid):
-        phone_number_value.PhoneNumber(faker.text())
-    with pytest.raises(phone_number_value.PhoneNumberInvalid):
-        phone_number_value.PhoneNumber("+719999999999")
+@pytest.mark.parametrize(
+    "phone_number, reason",
+    [
+        ("", PhoneNumberInvalidReason.EMPTY),
+        (generate_valid_phone_number("US"), PhoneNumberInvalidReason.UNSUPPORTED_REGION),
+        ("+719999999999", PhoneNumberInvalidReason.INVALID),
+    ],
+)
+def test_phone_number_invalid(phone_number, reason):
+    with pytest.raises(PhoneNumberInvalidError) as e:
+        PhoneNumber(phone_number)
+
+    assert e.value.reason == reason
