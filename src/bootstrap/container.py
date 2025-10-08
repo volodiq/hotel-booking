@@ -4,6 +4,8 @@ from dishka import Provider, Scope
 
 from contexts.auth.app import use_cases as auth_use_cases
 from contexts.auth.infra import gateways as auth_gateways
+from contexts.hotels.app import use_cases as hotels_use_cases
+from contexts.hotels.infra import gateways as hotels_gateways, repositories as hotels_repositories
 from contexts.users.api import internal as users_internal
 from contexts.users.app import use_cases as users_use_cases
 from contexts.users.infra import repositories as users_repositories
@@ -57,5 +59,27 @@ provider.provide(users_internal.VerifyUserPassword, scope=Scope.REQUEST)
 provider.provide(
     users_repositories.SAUserRepository,
     provides=users_repositories.UserRepository,
+    scope=Scope.REQUEST,
+)
+
+# Hotels
+provider.provide(hotels_use_cases.CreateHotel, scope=Scope.REQUEST)
+provider.provide(hotels_use_cases.CreateRoom, scope=Scope.REQUEST)
+provider.provide(hotels_use_cases.AddRoomPhoto, scope=Scope.REQUEST)
+
+# TODO s3 session
+provider.provide(
+    hotels_gateways.MockPhotoStorage,
+    provides=hotels_gateways.PhotoStorage,
+    scope=Scope.REQUEST,
+)
+provider.provide(
+    hotels_repositories.SAHotelRepository,
+    provides=hotels_repositories.HotelRepository,
+    scope=Scope.REQUEST,
+)
+provider.provide(
+    hotels_repositories.SARoomRepository,
+    provides=hotels_repositories.RoomRepository,
     scope=Scope.REQUEST,
 )
