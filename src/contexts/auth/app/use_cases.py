@@ -1,19 +1,19 @@
 from dataclasses import dataclass
 
+from contexts.users.api.facade import UsersFacade
 from shared.app.dtos import Principal, TokenType
 from shared.app.interfaces import TokenService
 
 from . import dtos, errors
-from .interfaces import UsersGateway
 
 
 @dataclass
 class AuthenticateUser:
-    users_gateway: UsersGateway
+    users_facade: UsersFacade
     token_service: TokenService
 
     async def __call__(self, phone: str, password: str) -> dtos.TokenPair:
-        verification_result = await self.users_gateway.verify_user_password(phone, password)
+        verification_result = await self.users_facade.verify_user_password(phone, password)
         if verification_result.user_oid is None or not verification_result.is_valid:
             raise errors.InvalidCredentials()
 

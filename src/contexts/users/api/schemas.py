@@ -6,10 +6,3 @@ class SCreateUser(BaseModel):
     first_name: str = Field(examples=["John"])
     last_name: str = Field(examples=["Doe"])
     password: str
-
-
-class SVerifyUserPasswordOut(BaseModel):
-    is_valid: bool
-    user_oid: str | None = None
-    is_superuser: bool | None = None
-    is_hotel_admin: bool | None = None
