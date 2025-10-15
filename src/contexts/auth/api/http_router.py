@@ -1,7 +1,7 @@
 from dishka.integrations.fastapi import DishkaRoute, FromDishka
 from fastapi import APIRouter
 
-from ..app import use_cases
+from ..core import use_cases
 from . import schemas
 
 

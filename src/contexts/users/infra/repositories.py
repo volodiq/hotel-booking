@@ -4,8 +4,8 @@ from sqlalchemy import sql
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..app import entities, values
-from ..app.interfaces import UserRepository
+from ..core import entities, values
+from ..core.interfaces import UserRepository
 from .models import UserModel
 
 

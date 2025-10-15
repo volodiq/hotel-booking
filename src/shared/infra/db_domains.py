@@ -30,3 +30,5 @@ Bool = Annotated[
         nullable=False,
     ),
 ]
+
+UUID = Annotated[str, mapped_column(types.UUID(as_uuid=False))]

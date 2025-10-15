@@ -3,7 +3,7 @@ from dishka.integrations.click import FromDishka
 
 from shared.api.click_di import cli_inject
 
-from ..app import use_cases
+from ..core import use_cases
 
 
 @asyncclick.command()
