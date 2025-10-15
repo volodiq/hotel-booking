@@ -15,7 +15,7 @@ class SAHotelRepository(HotelRepository):
     session: AsyncSession
 
     @staticmethod
-    def to_entity(model: models.Hotel) -> entities.Hotel:
+    def to_entity(model: models.HotelModel) -> entities.Hotel:
         return entities.Hotel(
             oid=model.oid,
             name=model.name,
@@ -26,7 +26,7 @@ class SAHotelRepository(HotelRepository):
         )
 
     async def save(self, hotel: entities.Hotel) -> None:
-        insert_stmt = insert(models.Hotel).values(
+        insert_stmt = insert(models.HotelModel).values(
             oid=hotel.oid,
             name=hotel.name,
             address=hotel.address,
@@ -35,7 +35,7 @@ class SAHotelRepository(HotelRepository):
             created_at=hotel.created_at.replace(tzinfo=None),
         )
         upsert_stmt = insert_stmt.on_conflict_do_update(
-            index_elements=[models.Hotel.oid],
+            index_elements=[models.HotelModel.oid],
             set_={
                 "name": insert_stmt.excluded.name,
                 "address": insert_stmt.excluded.address,
@@ -46,7 +46,7 @@ class SAHotelRepository(HotelRepository):
         await self.session.execute(upsert_stmt)
 
     async def get_by_oid(self, oid: str) -> entities.Hotel | None:
-        stmt = sql.select(models.Hotel).where(models.Hotel.oid == oid)
+        stmt = sql.select(models.HotelModel).where(models.HotelModel.oid == oid)
         res = await self.session.scalars(stmt)
         model = res.one_or_none()
         if not model:
@@ -60,7 +60,7 @@ class SARoomRepository(RoomRepository):
     session: AsyncSession
 
     @staticmethod
-    def to_entity(model: models.Room) -> entities.Room:
+    def to_entity(model: models.RoomModel) -> entities.Room:
         return entities.Room(
             oid=model.oid,
             name=model.name,
@@ -82,8 +82,8 @@ class SARoomRepository(RoomRepository):
         )
 
     @staticmethod
-    def to_model(room: entities.Room) -> models.Room:
-        return models.Room(
+    def to_model(room: entities.Room) -> models.RoomModel:
+        return models.RoomModel(
             oid=room.oid,
             name=room.name,
             hotel_oid=room.hotel_oid,
@@ -92,7 +92,7 @@ class SARoomRepository(RoomRepository):
             bed_type=room.bed_type,
             created_at=room.created_at.replace(tzinfo=None),
             photos=[
-                models.RoomPhoto(
+                models.RoomPhotoModel(
                     oid=p.oid,
                     url=p.url,
                     is_cover=p.is_cover,
@@ -103,8 +103,8 @@ class SARoomRepository(RoomRepository):
             ],
         )
 
-    async def _upsert_room(self, room: models.Room) -> None:
-        insert_stmt = insert(models.Room).values(
+    async def _upsert_room(self, room: models.RoomModel) -> None:
+        insert_stmt = insert(models.RoomModel).values(
             oid=room.oid,
             hotel_oid=room.hotel_oid,
             name=room.name,
@@ -114,7 +114,7 @@ class SARoomRepository(RoomRepository):
             created_at=room.created_at.replace(tzinfo=None),
         )
         upsert_stmt = insert_stmt.on_conflict_do_update(
-            index_elements=[models.Room.oid],
+            index_elements=[models.RoomModel.oid],
             set_={
                 "name": insert_stmt.excluded.name,
                 "description": insert_stmt.excluded.description,
@@ -124,12 +124,14 @@ class SARoomRepository(RoomRepository):
         )
         await self.session.execute(upsert_stmt)
 
-    async def _upsert_photos(self, room: models.Room):
-        delete_stmt = sql.delete(models.RoomPhoto).where(models.RoomPhoto.room_oid == room.oid)
+    async def _upsert_photos(self, room: models.RoomModel):
+        delete_stmt = sql.delete(models.RoomPhotoModel).where(
+            models.RoomPhotoModel.room_oid == room.oid
+        )
         await self.session.execute(delete_stmt)
         if not room.photos:
             return
-        insert_stmt = insert(models.RoomPhoto).values(
+        insert_stmt = insert(models.RoomPhotoModel).values(
             [
                 {
                     "oid": p.oid,
@@ -151,9 +153,9 @@ class SARoomRepository(RoomRepository):
 
     async def get_by_oid(self, oid: str) -> entities.Room | None:
         stmt = (
-            sql.select(models.Room)
-            .where(models.Room.oid == oid)
-            .options(selectinload(models.Room.photos))
+            sql.select(models.RoomModel)
+            .where(models.RoomModel.oid == oid)
+            .options(selectinload(models.RoomModel.photos))
         )
         res = await self.session.scalars(stmt)
         model = res.one_or_none()

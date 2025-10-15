@@ -23,7 +23,7 @@ class RoomDescriptionInvalidError(ApplicationError):
         return ROOM_DESCRIPTION_INVALID_REASON_DESCRIPTIONS[self.reason]
 
 
-class RoomDescription(ValueObject[int]):
+class RoomDescription(ValueObject[str]):
     def validate(self):
         if len(self.value) > 1024:
             raise RoomDescriptionInvalidError(RoomDescriptionInvalidReason.TOO_LONG)

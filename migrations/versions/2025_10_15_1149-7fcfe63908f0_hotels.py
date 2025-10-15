@@ -1,8 +1,8 @@
-"""Add hotels
+"""Hotels
 
-Revision ID: c1dbb95bf9af
+Revision ID: 7fcfe63908f0
 Revises: 16a2e42d9814
-Create Date: 2025-10-08 10:31:50.704502
+Create Date: 2025-10-15 11:49:40.144837
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'c1dbb95bf9af'
+revision: str = '7fcfe63908f0'
 down_revision: Union[str, Sequence[str], None] = '16a2e42d9814'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -34,8 +34,8 @@ def upgrade() -> None:
     sa.Column('name', sa.String(), nullable=False),
     sa.Column('hotel_oid', sa.UUID(as_uuid=False), nullable=False),
     sa.Column('description', sa.String(), nullable=False),
-    sa.Column('room_type', sa.String(), nullable=False),
-    sa.Column('bed_type', sa.String(), nullable=False),
+    sa.Column('room_type', sa.Enum('STANDARD', 'DELUXE', 'SUITE', name='roomtype'), nullable=False),
+    sa.Column('bed_type', sa.Enum('SINGLE', 'DOUBLE', 'TWIN', 'TRIPLE', 'FAMILY', name='roombedtype'), nullable=False),
     sa.Column('oid', sa.UUID(as_uuid=False), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('oid')

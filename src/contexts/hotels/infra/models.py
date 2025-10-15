@@ -1,11 +1,13 @@
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, types
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from shared.infra.db_domains import UUID, Bool, String
 from shared.infra.models import DBModel
 
+from ..core import entities
 
-class Hotel(DBModel):
+
+class HotelModel(DBModel):
     __tablename__ = "hotels"
 
     name: Mapped[String]
@@ -14,19 +16,25 @@ class Hotel(DBModel):
     address: Mapped[String]
 
 
-class Room(DBModel):
+class RoomModel(DBModel):
     __tablename__ = "rooms"
 
     name: Mapped[String]
     hotel_oid: Mapped[UUID]
     description: Mapped[String]
-    room_type: Mapped[String]
-    bed_type: Mapped[String]
+    room_type: Mapped[entities.RoomType] = mapped_column(
+        types.Enum(entities.RoomType),
+        nullable=False,
+    )
+    bed_type: Mapped[entities.RoomBedType] = mapped_column(
+        types.Enum(entities.RoomBedType),
+        nullable=False,
+    )
 
-    photos: Mapped[list["RoomPhoto"]] = relationship(back_populates="room")
+    photos: Mapped[list["RoomPhotoModel"]] = relationship(back_populates="room")
 
 
-class RoomPhoto(DBModel):
+class RoomPhotoModel(DBModel):
     __tablename__ = "room_photos"
 
     url: Mapped[String]
@@ -34,4 +42,4 @@ class RoomPhoto(DBModel):
     caption: Mapped[String] = mapped_column(nullable=True)
     is_cover: Mapped[Bool]
 
-    room: Mapped["Room"] = relationship(back_populates="photos")
+    room: Mapped["RoomModel"] = relationship(back_populates="photos")
