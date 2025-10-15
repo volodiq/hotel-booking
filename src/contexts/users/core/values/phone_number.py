@@ -3,8 +3,8 @@ from enum import StrEnum
 
 import phonenumbers
 
-from shared.app.errors import ApplicationError
-from shared.app.value_object import ValueObject
+from shared.core.errors import ApplicationError
+from shared.core.value_object import ValueObject
 
 
 class PhoneNumberInvalidReason(StrEnum):

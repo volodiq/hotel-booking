@@ -5,7 +5,7 @@ from fastapi import APIRouter, File, Form, HTTPException, status
 
 from shared.api.fastapi_di import PrincipalDep
 
-from ..app import errors, use_cases
+from ..core import errors, use_cases
 from . import schemas
 
 

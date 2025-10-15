@@ -1,10 +1,10 @@
 from dishka import Provider, Scope
 
-from contexts.auth.app import use_cases as auth_use_cases
-from contexts.hotels.app import use_cases as hotels_use_cases
+from contexts.auth.core import use_cases as auth_use_cases
+from contexts.hotels.core import use_cases as hotels_use_cases
 from contexts.hotels.infra import gateways as hotels_gateways, repositories as hotels_repositories
 from contexts.users.api import facade as users_facade
-from contexts.users.app import use_cases as users_use_cases
+from contexts.users.core import use_cases as users_use_cases
 from contexts.users.infra import repositories as users_repositories
 from shared.infra import services as common_services
 

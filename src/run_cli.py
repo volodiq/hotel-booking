@@ -5,7 +5,7 @@ from dishka.integrations.click import setup_dishka
 from bootstrap import models_registry  # noqa: F401
 from bootstrap.container import provider
 from contexts.users.api.cli import create_superuser
-from shared.app.errors import ApplicationError
+from shared.core.errors import ApplicationError
 
 
 @asyncclick.group()

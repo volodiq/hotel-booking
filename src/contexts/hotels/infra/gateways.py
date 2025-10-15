@@ -4,7 +4,7 @@ import uuid
 import magic
 from types_aiobotocore_s3.client import S3Client
 
-from ..app.interfaces import PhotoStorage
+from ..core.interfaces import PhotoStorage
 
 
 @dataclass

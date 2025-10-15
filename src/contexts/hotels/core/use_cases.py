@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from shared.app.dtos import Principal
+from shared.core.dtos import Principal
 
 from . import entities, errors, interfaces, values
 

@@ -5,8 +5,8 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from ..app import entities, values
-from ..app.interfaces import HotelRepository, RoomRepository
+from ..core import entities, values
+from ..core.interfaces import HotelRepository, RoomRepository
 from . import models
 
 

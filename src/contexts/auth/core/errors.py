@@ -1,4 +1,4 @@
-from shared.app.errors import ApplicationError
+from shared.core.errors import ApplicationError
 
 
 class InvalidCredentials(ApplicationError):

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from shared.app.dtos import Principal
-from shared.app.interfaces import PasswordService
+from shared.core.dtos import Principal
+from shared.core.interfaces import PasswordService
 
 from . import entities, errors, values
 from .interfaces import UserRepository

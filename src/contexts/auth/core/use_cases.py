@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
 from contexts.users.api.facade import UsersFacade
-from shared.app.dtos import Principal, TokenType
-from shared.app.interfaces import TokenService
+from shared.core.dtos import Principal, TokenType
+from shared.core.interfaces import TokenService
 
 from . import dtos, errors
 

@@ -5,8 +5,8 @@ from time import time
 import bcrypt
 import jwt
 
-from ..app import dtos, errors
-from ..app.interfaces import PasswordService, TokenService
+from ..core import dtos, errors
+from ..core.interfaces import PasswordService, TokenService
 
 
 class BcryptPasswordService(PasswordService):

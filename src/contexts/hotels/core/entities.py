@@ -2,7 +2,7 @@ from dataclasses import dataclass, field, replace
 from enum import StrEnum
 from typing import Self
 
-from shared.app.entity import Entity
+from shared.core.entity import Entity
 
 from . import errors, values
 

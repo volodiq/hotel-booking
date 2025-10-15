@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from enum import StrEnum
 
-from shared.app.errors import ApplicationError
-from shared.app.value_object import ValueObject
+from shared.core.errors import ApplicationError
+from shared.core.value_object import ValueObject
 
 
 class RoomDescriptionInvalidReason(StrEnum):

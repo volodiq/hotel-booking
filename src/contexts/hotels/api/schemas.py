@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from ..app import entities
+from ..core import entities
 
 
 class SCreateHotel(BaseModel):
