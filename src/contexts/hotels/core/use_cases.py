@@ -2,17 +2,13 @@ from dataclasses import dataclass
 
 from shared.core.dtos import Principal
 
-from . import entities, errors, interfaces, values
-
-
-def validate_principal(principal: Principal):
-    if "hotel_admin" not in principal.roles:
-        raise errors.ActionForbidden()
+from . import entities, errors, interfaces, services, values
 
 
 @dataclass
 class CreateHotel:
     hotel_repository: interfaces.HotelRepository
+    access_service: services.HotelAccessService
 
     async def __call__(
         self,
@@ -21,7 +17,7 @@ class CreateHotel:
         name: str,
         address: str,
     ):
-        validate_principal(principal)
+        self.access_service.verify_module_access(principal)
 
         hotel = entities.Hotel(
             rating=values.HotelRating(rating),
@@ -35,12 +31,7 @@ class CreateHotel:
 @dataclass
 class CreateRoom:
     room_repository: interfaces.RoomRepository
-    hotel_repository: interfaces.HotelRepository
-
-    async def _verify_access(self, principal: Principal, hotel_oid: str):
-        hotel = await self.hotel_repository.get_by_oid(hotel_oid)
-        if hotel is None or hotel.hotel_admin_oid != principal.sub:
-            raise errors.HotelNotFound()
+    access_service: services.HotelAccessService
 
     async def __call__(
         self,
@@ -51,8 +42,7 @@ class CreateRoom:
         room_type: entities.RoomType,
         bed_type: entities.RoomBedType,
     ):
-        validate_principal(principal)
-        await self._verify_access(principal=principal, hotel_oid=hotel_oid)
+        await self.access_service.verify_hotel_access(principal=principal, hotel_oid=hotel_oid)
 
         room = entities.Room(
             name=name,
@@ -67,13 +57,8 @@ class CreateRoom:
 @dataclass
 class AddRoomPhoto:
     room_repository: interfaces.RoomRepository
-    hotel_repository: interfaces.HotelRepository
     photo_storage: interfaces.PhotoStorage
-
-    async def _verify_access(self, principal: Principal, hotel_oid: str):
-        hotel = await self.hotel_repository.get_by_oid(hotel_oid)
-        if hotel is None or hotel.hotel_admin_oid != principal.sub:
-            raise errors.HotelNotFound()
+    access_service: services.HotelAccessService
 
     async def __call__(
         self,
@@ -84,8 +69,7 @@ class AddRoomPhoto:
         caption: str | None = None,
         is_cover: bool = False,
     ):
-        validate_principal(principal=principal)
-        await self._verify_access(principal=principal, hotel_oid=hotel_oid)
+        await self.access_service.verify_hotel_access(principal=principal, hotel_oid=hotel_oid)
 
         room = await self.room_repository.get_by_oid(room_oid)
         if room is None:
