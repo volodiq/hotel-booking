@@ -55,3 +55,8 @@ python_functions = ["test_*", "check_*", "*_test"]
 testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = "-ra -q"
+
+# Mypy
+
+[tool.mypy]
+mypy_path = ["src"]
