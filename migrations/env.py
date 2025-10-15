@@ -6,8 +6,8 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from bootstrap import models_registry
-from bootstrap.env import get_env
+from src.bootstrap import models_registry
+from src.bootstrap.env import get_env
 
 
 config = context.config
