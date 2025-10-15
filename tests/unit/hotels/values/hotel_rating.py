@@ -1,7 +1,7 @@
 from faker import Faker
 import pytest
 
-from contexts.hotels.app.values.hotel_rating import (
+from src.contexts.hotels.core.values.hotel_rating import (
     HotelRating,
     HotelRatingInvalidError,
     HotelRatingInvalidReason,

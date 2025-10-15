@@ -3,7 +3,11 @@ from functools import partial
 from faker import Faker
 import pytest
 
-from contexts.users.app.values.password import Password, PasswordInvalidError, PasswordInvalidReason
+from src.contexts.users.core.values.password import (
+    Password,
+    PasswordInvalidError,
+    PasswordInvalidReason,
+)
 
 
 faker = Faker()

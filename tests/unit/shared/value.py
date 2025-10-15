@@ -1,11 +1,12 @@
 from faker import Faker
 import pytest
 
-from shared.app.errors import ApplicationError
-from shared.app.value_object import ValueObject
+from src.shared.core.errors import ApplicationError
+from src.shared.core.value_object import ValueObject
 
 
 class SomeValueTooLong(ApplicationError):
+    @property
     def details(self) -> str:
         return "Value is too long"
 

@@ -1,7 +1,7 @@
 from faker import Faker
 import pytest
 
-from contexts.hotels.app.values.room_description import (
+from src.contexts.hotels.core.values.room_description import (
     RoomDescription,
     RoomDescriptionInvalidError,
     RoomDescriptionInvalidReason,

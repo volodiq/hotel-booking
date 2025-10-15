@@ -1,7 +1,7 @@
 import phonenumbers
 import pytest
 
-from contexts.users.app.values.phone_number import (
+from src.contexts.users.core.values.phone_number import (
     PhoneNumber,
     PhoneNumberInvalidError,
     PhoneNumberInvalidReason,

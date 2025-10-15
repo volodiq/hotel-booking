@@ -53,7 +53,7 @@ line-ending = "lf"
 python_files = "*.py"
 python_functions = ["test_*", "check_*", "*_test"]
 testpaths = ["tests"]
-pythonpath = ["src"]
+pythonpath = [".", "src"]
 addopts = "-ra -q"
 
 # Mypy

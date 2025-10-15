@@ -1,7 +1,7 @@
 from faker import Faker
 import pytest
 
-from contexts.users.app.values.last_name import (
+from src.contexts.users.core.values.last_name import (
     LastName,
     LastNameInvalidError,
     LastNameInvalidReason,

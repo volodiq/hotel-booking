@@ -1,9 +1,9 @@
 from faker import Faker
 import pytest
 
-from contexts.hotels.app.entities import Room, RoomBedType, RoomPhoto, RoomType
-from contexts.hotels.app.errors import RoomPhotosLimitExceeded
-from contexts.hotels.app.values import RoomDescription
+from src.contexts.hotels.core.entities import Room, RoomBedType, RoomPhoto, RoomType
+from src.contexts.hotels.core.errors import RoomPhotosLimitExceeded
+from src.contexts.hotels.core.values import RoomDescription
 
 
 def test_room(faker: Faker):
