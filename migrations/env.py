@@ -7,13 +7,11 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from src.bootstrap import models_registry
-from src.bootstrap.env import get_env
+from src.bootstrap.config import db_dsn
 
 
 config = context.config
-
-env = get_env()
-config.set_main_option("sqlalchemy.url", env.db_dsn)
+config.set_main_option("sqlalchemy.url", db_dsn)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
